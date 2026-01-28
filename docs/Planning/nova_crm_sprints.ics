@@ -1,0 +1,444 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//NovaCRM//Planning Calendar//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:NovaCRM + AI Compliance Hub Planning
+X-WR-TIMEZONE:Europe/Paris
+X-WR-CALDESC:Planning 6 mois (12 sprints) - v1.0-ready Juillet 2026
+BEGIN:VTIMEZONE
+TZID:Europe/Paris
+BEGIN:STANDARD
+DTSTART:19701025T030000
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19700329T020000
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+END:VTIMEZONE
+
+BEGIN:VEVENT
+UID:sprint-1-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260202T090000
+DTEND;TZID=Europe/Paris:20260213T170000
+SUMMARY:🚀 Sprint 1 (02-13 Fév) — Fondation & Architecture
+DESCRIPTION:OBJECTIF: Socle technique API + structure modules + ADRs fondamentaux\n\nTÂCHES CLÉS:\n- Backend: /health endpoint + structuration (infrastructure/http/, core/domain/, core/services/)\n- Engine: Squelette Engine.analyze() + Rule interface\n- Frontend: Setup Next.js + lib/api.ts + Dashboard placeholder\n- Docs: ADR-00, ADR-01 + README enrichi\n\nDOD: lint/format OK, stub tests, architecture stable\nDURÉE: 10j (débutant avec mentorat)
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Frontend,Backend,Engine,Architecture
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-1-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260213T160000
+DTEND;TZID=Europe/Paris:20260213T170000
+SUMMARY:📋 Revue Sprint 1 & Rétrospective
+DESCRIPTION:Démonstration: /health endpoint, structure de base, ADRs\nMétriques: lint status, tests stub\nFeedback équipe\nPlanning Sprint 2
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-2-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260216T090000
+DTEND;TZID=Europe/Paris:20260227T170000
+SUMMARY:🔴 Sprint 2 (16-27 Fév) — Compliance Engine Core & Audit [CRITIQUE]
+DESCRIPTION:OBJECTIF: Premier moteur IA opérationnel + journalisation immuable (CHEMIN CRITIQUE)\n\nTÂCHES CLÉS:\n- Engine: Rule no_pii_in_prompts + audit append-only + masking PII\n- Backend: POST /api/v1/compliance/check + Logger JSON\n- Frontend: ComplianceBanner component\n- Docs: ADR-02, ADR-03\n\nDOD: PII detection 95%+ accurate, audit append-only testée, lint 100%\n⚠️ ALERT: Ne pas sauter audit immuable = fondation conformité\n\nCHEMIN CRITIQUE #1: Audit trail immuable\nRISK: Découverte tard = refactorisation massive\nMITIGATION: Review architecte J1, pas exceptions, tests complets
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Engine,Critical,Audit
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-2-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260227T160000
+DTEND;TZID=Europe/Paris:20260227T170000
+SUMMARY:📋 Revue Sprint 2 & Rétrospective
+DESCRIPTION:Démonstration: Rule 1 opérationnelle, audit immuable, E2E /compliance/check\nMétriques: PII accuracy, audit append-only verification\nCRITICAL PATH CHECK: Audit trail OK?\nPlanning Sprint 3
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review,Critical
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-3-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260302T090000
+DTEND;TZID=Europe/Paris:20260313T170000
+SUMMARY:📊 Sprint 3 (02-13 Mar) — CRUD CRM (Contacts)
+DESCRIPTION:OBJECTIF: Première entité CRM métier (Contacts seulement)\n\nTÂCHES CLÉS:\n- Backend: CRUD Contacts (GET/POST/PUT/DELETE) + Repository pattern\n- Engine: Rule no_mass_export_requests\n- Frontend: List Contacts + Create form\n\nDOD: OpenAPI stable, CRUD 100% coverage, rule 2 opérationnelle\nNOTE: Reporter Clients → Sprint 4 pour éviter surcharge
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Backend,CRM
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-3-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260313T160000
+DTEND;TZID=Europe/Paris:20260313T170000
+SUMMARY:📋 Revue Sprint 3 & Rétrospective
+DESCRIPTION:Démonstration: CRUD Contacts, Rule 2, pages CRM\nMétriques: OpenAPI stability, test coverage\nPlanning Sprint 4
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-4-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260316T090000
+DTEND;TZID=Europe/Paris:20260327T170000
+SUMMARY:📊 Sprint 4 (16-27 Mar) — CRUD CRM (Clients) & Policy Engine
+DESCRIPTION:OBJECTIF: Deuxième entité + règles déclaratives (YAML)\n\nTÂCHES CLÉS:\n- Backend: CRUD Clients + Adapter Engine\n- Engine: Rule no_secrets_in_prompts + YAML policy loader + Factory pattern\n- Frontend: Edit pages + Vue Compliance basique\n\nDOD: YAML parser OK, Factory pattern stable, 3 rules opérationnelles
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Backend,Engine,CRM
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-4-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260327T160000
+DTEND;TZID=Europe/Paris:20260327T170000
+SUMMARY:📋 Revue Sprint 4 & Rétrospective
+DESCRIPTION:Démonstration: CRUD Clients, YAML loader, Vue Compliance\nMétriques: Policy engine stability, rule factory\nPlanning Sprint 5
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-5-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260330T090000
+DTEND;TZID=Europe/Paris:20260410T170000
+SUMMARY:🔐 Sprint 5 (30 Mar-10 Avr) — Auth & JWT [CRITIQUE]
+DESCRIPTION:OBJECTIF: Authentification robuste = prérequis sécurité v1.0\n\nTÂCHES CLÉS:\n- Backend: JWT auth (issue/verify/refresh) + OAuth2 scaffold + CORS middleware\n- Frontend: Login page + token storage + route guards\n- Tests: auth e2e, token validation/expiry\n\nDOD: JWT generation/verification 100% tested, CORS OK, no secret en clair\n🔴 ALERT: External security review recommandée avant merge\n\nCHEMIN CRITIQUE #2: Auth & RBAC\nRISK: Auth faible découverte en prod = incident grave\nMITIGATION: Expert externe, RBAC guards exhaustifs
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Security,Critical,Auth
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-5-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260410T160000
+DTEND;TZID=Europe/Paris:20260410T170000
+SUMMARY:📋 Revue Sprint 5 & Rétrospective + SECURITY REVIEW
+DESCRIPTION:Démonstration: Login, JWT tokens, route guards\nMétriques: Auth e2e status, token security\n🔴 EXTERNAL SECURITY REVIEW: Go/No-go auth?\nPlanning Sprint 6
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review,Critical,Security
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-6-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260413T090000
+DTEND;TZID=Europe/Paris:20260424T170000
+SUMMARY:🔐 Sprint 6 (13-24 Avr) — RBAC & Audit Details [CRITIQUE]
+DESCRIPTION:OBJECTIF: Contrôle d'accès granulaire + audit traçable complet\n\nTÂCHES CLÉS:\n- Backend: RBAC (4 rôles: admin/manager/analyst/viewer) + guards + GET /audit/:id + export JSON\n- Engine: Decorator instrumentation + redact_outputs\n- Frontend: Audit page détaillée + conditional rendering par rôle\n\nDOD: RBAC guards 100% coverage, audit export testée, masking PII 100%\n🔴 ALERT: Ne pas sauter PII redaction = fondation conformité IA Act\n\nCHEMIN CRITIQUE #2b: RBAC & Redaction\nRISK: PII exposure = incident grave\nMITIGATION: Tests redaction exhaustifs, no clair text in outputs
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Security,Critical,RBAC,Audit
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-6-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260424T160000
+DTEND;TZID=Europe/Paris:20260424T170000
+SUMMARY:📋 Revue Sprint 6 & Rétrospective
+DESCRIPTION:Démonstration: RBAC guards, audit export, redaction\nMétriques: Guard coverage, masking 100%?\nCRITICAL PATH CHECK: Auth/RBAC/Redaction complete?\nPlanning Sprint 7
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review,Critical
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-7-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260427T090000
+DTEND;TZID=Europe/Paris:20260508T170000
+SUMMARY:📊 Sprint 7 (27 Avr-08 Mai) — Observabilité & E2E Tests
+DESCRIPTION:OBJECTIF: Logs structurés + tests intégration complets\n\nTÂCHES CLÉS:\n- Observabilité: Logs JSON uniformes (API+Engine), champs requestId/auditId/actor\n- Tests: E2E auth → compliance → audit export + bench scan\n- Frontend: Tables improvements (pagination, filtres)\n\nDOD: E2E pass, logs JSON parsables, latence < 500ms
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Quality,Testing,Logging
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-7-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260508T160000
+DTEND;TZID=Europe/Paris:20260508T170000
+SUMMARY:📋 Revue Sprint 7 & Rétrospective
+DESCRIPTION:Démonstration: E2E flows, logs JSON, performance\nMétriques: E2E pass rate, latency\nPlanning Sprint 8
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-8-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260511T090000
+DTEND;TZID=Europe/Paris:20260522T170000
+SUMMARY:✅ Sprint 8 (11-22 Mai) — Qualité & Documentation
+DESCRIPTION:OBJECTIF: Couverture tests 75-80% + politiques documentées\n\nTÂCHES CLÉS:\n- Qualité: Lint 100% (Ruff/Black + ESLint/Prettier)\n- Tests: Intégration complètes (compliance+CRUD+auth)\n- Docs: AIrules.md finalisé + incident playbook\n\nDOD: 75-80% test coverage, lint 100%, AIrules complete
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Quality,Documentation
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-8-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260522T160000
+DTEND;TZID=Europe/Paris:20260522T170000
+SUMMARY:📋 Revue Sprint 8 & Rétrospective
+DESCRIPTION:Démonstration: Lint 100%, tests 75-80%, AIrules\nMétriques: Coverage%, lint status\nQuality Gate: GO for production?\nPlanning Sprint 9
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-9-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260525T090000
+DTEND;TZID=Europe/Paris:20260605T170000
+SUMMARY:📈 Sprint 9 (25 Mai-05 Juin) — Scalabilité Option & Architecture
+DESCRIPTION:OBJECTIF: Préparer séparation Engine en service (PoC)\n\nTÂCHES CLÉS:\n- Backend: Adapter réseau (REST interne) + feature flag COMPLIANCE_MODE\n- Engine: HTTP interface POST /analyze (PoC)\n- DB: PostgreSQL schémas (prod-ready)\n\nDOD: Adapter REST PoC working, PostgreSQL schema valid\nNOTE: Pas d'activation service full (YAGNI) tant que load ne l'exige
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Architecture,Scalability
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-9-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260605T160000
+DTEND;TZID=Europe/Paris:20260605T170000
+SUMMARY:📋 Revue Sprint 9 & Rétrospective
+DESCRIPTION:Démonstration: Adapter REST PoC, PostgreSQL schema\nMétriques: Service readiness\nPlanning Sprint 10
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-10-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260608T090000
+DTEND;TZID=Europe/Paris:20260619T170000
+SUMMARY:💾 Sprint 10 (08-19 Juin) — Database Migration & Async
+DESCRIPTION:OBJECTIF: Persistance prod-ready + background jobs\n\nTÂCHES CLÉS:\n- Backend: Alembic migrations (SQLite→PostgreSQL) + Postgres local (Compose)\n- Async (optionnel): Redis Queue PoC\n- Frontend: UX improvements (sortable tables, advanced filters)\n\nDOD: migration testée, Postgres startup OK, queue PoC stable
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Database,Infrastructure
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-10-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260619T160000
+DTEND;TZID=Europe/Paris:20260619T170000
+SUMMARY:📋 Revue Sprint 10 & Rétrospective
+DESCRIPTION:Démonstration: PostgreSQL migration, async PoC, UX\nMétriques: Migration success, async stability\nPlanning Sprint 11
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-11-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260622T090000
+DTEND;TZID=Europe/Paris:20260703T170000
+SUMMARY:🔴 Sprint 11 (22 Juin-03 Juil) — Hardening & Conformité [CRITIQUE]
+DESCRIPTION:OBJECTIF: Sécurité renforcée + DPIA documentée = prérequis v1.0\n\nTÂCHES CLÉS:\n- Sécurité: Redaction renforcée (SS#, IBAN...) + révision règles + tuning faux positifs\n- Conformité: DPIA document + revue interne sécurité (checklist)\n- Docs: Playbook déploiement (dev→staging→prod) + incident procedures\n\nDOD: DPIA complétée, playbook deployement OK, security checklist validée\n🔴 ALERT: DPIA = fondation IA Act, ne pas ignorer\n\nCHEMIN CRITIQUE #3: DPIA & Hardening\nRISK: Déployer sans DPIA = non-conformité légale\nMITIGATION: Template pré-rempli, expert légal review
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Security,Critical,Compliance,DPIA
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-11-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260703T160000
+DTEND;TZID=Europe/Paris:20260703T170000
+SUMMARY:📋 Revue Sprint 11 & Rétrospective + COMPLIANCE REVIEW
+DESCRIPTION:Démonstration: DPIA doc, playbook, security checklist\nMétriques: Redaction hardening, incident procedures\n🔴 COMPLIANCE REVIEW: DPIA OK? IA Act ready?\nGO/NO-GO for v1.0-ready?\nPlanning Sprint 12
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Review,Critical,Compliance
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-12-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260706T090000
+DTEND;TZID=Europe/Paris:20260717T170000
+SUMMARY:🎉 Sprint 12 (06-17 Juil) — Release v1.0 & Demo
+DESCRIPTION:OBJECTIF: Stabilisation, démo, taggage release\n\nTÂCHES CLÉS:\n- Stabilisation: Bugfix critiques, performance final check\n- Démo: Internal demo (stakeholders) avec use-cases clés\n- Release: Tag v1.0-ready, ADRs finalisés, docs review final\n\nDOD: tag créé, démo pass, docs complètes, no critical bugs
+LOCATION:NovaCRM Team
+CATEGORIES:Sprint,Release,Demo
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:sprint-12-review-2026@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260717T160000
+DTEND;TZID=Europe/Paris:20260717T170000
+SUMMARY:📋 Release Review & Internal Demo
+DESCRIPTION:Démonstration v1.0-ready: tous les use-cases clés\nMétriques finales: coverage 80%+, latency < 500ms, 0 critical bugs\nStakeholder feedback\nCelebration & closing\nPlanning v1.1+
+LOCATION:NovaCRM Team
+CATEGORIES:Release,Demo
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:critical-path-checkpoint-1@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260227T180000
+DTEND;TZID=Europe/Paris:20260228T090000
+SUMMARY:🔴 CHECKPOINT 1: Audit Trail Immuable
+DESCRIPTION:CHEMIN CRITIQUE: Sprint 2 doit être OK\n\nSuccess Criteria:\n✓ Audit append-only fonctionnelle\n✓ PII masquée avant stockage\n✓ 100% tests couverture\n\nSi ÉCHOUE → Impossible de continuer\nEscalade immédiate required
+LOCATION:NovaCRM Team
+CATEGORIES:Critical,Checkpoint
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:critical-path-checkpoint-2@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260424T180000
+DTEND;TZID=Europe/Paris:20260425T090000
+SUMMARY:🔴 CHECKPOINT 2: Auth/RBAC & Redaction
+DESCRIPTION:CHEMIN CRITIQUE: Sprints 5-6 doivent être OK\n\nSuccess Criteria:\n✓ JWT generation/verification 100% tested\n✓ RBAC guards sur tous endpoints\n✓ External security review PASSED\n✓ PII redaction 100% coverage\n\nSi ÉCHOUE → Impossible de continuer\nEscalade immédiate required\nExpert externe MANDATORY
+LOCATION:NovaCRM Team
+CATEGORIES:Critical,Checkpoint,Security
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:critical-path-checkpoint-3@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260703T180000
+DTEND;TZID=Europe/Paris:20260704T090000
+SUMMARY:🔴 CHECKPOINT 3: DPIA & IA Act Compliance
+DESCRIPTION:CHEMIN CRITIQUE: Sprint 11 doit être OK\n\nSuccess Criteria:\n✓ DPIA document complétée\n✓ Redaction PII 100% coverage\n✓ Security checklist validée\n✓ Playbook déploiement OK\n\nSi ÉCHOUE → Non-conformité légale IA Act\nEscalade immédiate required\nExpert légal MANDATORY
+LOCATION:NovaCRM Team
+CATEGORIES:Critical,Checkpoint,Compliance,Legal
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:planning-meeting-weekly@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260203T090000
+DTEND;TZID=Europe/Paris:20260203T093000
+RRULE:FREQ=WEEKLY;BYDAY=MO;UNTIL=20260721
+SUMMARY:🗓️ Planning Meeting (Lundi 09h)
+DESCRIPTION:Sprint planning (30 min)\nDiscussion des dépendances, risques\nAllocation des tasks
+LOCATION:NovaCRM Team
+CATEGORIES:Ritual,Planning
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:standup-daily@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260203T090000
+DTEND;TZID=Europe/Paris:20260203T091500
+RRULE:FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;UNTIL=20260721
+SUMMARY:📢 Daily Stand-up (15 min)
+DESCRIPTION:What's done, what's blocked, what's next\nEscalade des risques/blockers
+LOCATION:NovaCRM Team
+CATEGORIES:Ritual,Standup
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:retro-weekly@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260207T160000
+DTEND;TZID=Europe/Paris:20260207T164500
+RRULE:FREQ=WEEKLY;BYDAY=FR;UNTIL=20260721
+SUMMARY:📋 Rétrospective (45 min)
+DESCRIPTION:Sprint review + feedback\nAméliorations identifiées pour sprint suivant\nMéthodologie de réunion: went well / not well / actions
+LOCATION:NovaCRM Team
+CATEGORIES:Ritual,Retro
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:adr-deadline-sprint-1@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260205T170000
+DTEND;TZID=Europe/Paris:20260205T180000
+SUMMARY:📝 ADR-00/01 Deadline (Sprint 1 J4)
+DESCRIPTION:DEADLINE: ADR-00 (système ADR) doit être merged\nDEADLINE: ADR-01 (architecture globale) doit être mergé\n\nCritère: Toute décision structurante après ce point doit passer par ADR\nRessource: Lead architecte
+LOCATION:NovaCRM Team
+CATEGORIES:Deadline,Documentation
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+BEGIN:VEVENT
+UID:lint-ci-go-live@novacrm.local
+DTSTAMP:20260128T120000Z
+DTSTART;TZID=Europe/Paris:20260210T170000
+DTEND;TZID=Europe/Paris:20260210T180000
+SUMMARY:🔧 CI Linting Go-Live (Sprint 1 J9)
+DESCRIPTION:DEADLINE: GitHub Actions CI avec linting obligatoire\nREQUIREMENT: All PRs must pass lint before merge\n\nTâche: Setup pre-commit hooks + GitHub Actions\nRessource: DevOps/backend lead
+LOCATION:NovaCRM Team
+CATEGORIES:Deadline,CI
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+
+END:VCALENDAR

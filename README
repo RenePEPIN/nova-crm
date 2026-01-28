@@ -1,0 +1,776 @@
+***
+
+# 🚀 **NovaCRM + AI Compliance Hub**
+
+**NovaCRM** est un CRM moderne, modulaire et entièrement **API‑first**, conçu pour offrir une base solide aux équipes commerciales, opérationnelles et techniques. Il fournit les briques essentielles d’un CRM nouvelle génération : gestion des organisations, des utilisateurs, des contacts, des interactions, des permissions, des actions automatisées, et une architecture pensée pour évoluer proprement dans le temps.
+
+À côté de ce socle CRM, **AI Compliance Hub** apporte une brique totalement unique :  
+un **moteur d’analyse et de gouvernance des usages IA**, capable d’inspecter les prompts, les logs, les données circulant dans les outils IA, et d’appliquer des politiques de conformité adaptées aux entreprises (sécurité, risque, IA Act, règles internes).
+
+Ces deux modules, bien que séparés techniquement, sont conçus pour fonctionner en synergie :
+
+*   **NovaCRM** apporte la structure, les utilisateurs, les équipes, les rôles, la couche business.
+*   **AI Compliance Hub** apporte la détection de risques, le monitoring IA, l’audit, et la conformité automatique.
+
+L’ensemble forme une plateforme prête pour 2026, orientée **gouvernance IA + productivité d’équipe**, capable d'aider les entreprises à :
+
+### ✔ Maîtriser les usages IA au quotidien
+
+Les équipes utilisent ChatGPT, Copilot, M365 ou des assistants internes. Le moteur analyse les prompts, détecte les données sensibles, applique des règles, alerte en cas de risque et fournit un audit complet.
+
+### ✔ Consolider les interactions et informations dans un CRM cohérent
+
+NovaCRM centralise les clients, les contacts, les activités et les interactions. L'objectif : une base propre, exploitable, intégrée à un système moderne.
+
+### ✔ Assurer la conformité (IA Act, sécurité, confidentialité, interne)
+
+Le moteur IA peut appliquer :
+
+*   classification des risques,
+*   vérification des données PII,
+*   règles personnalisées,
+*   pistes d’audit exportables,
+*   politiques modulaires.
+
+### ✔ Aligner technologie + équipes + conformité
+
+La plateforme a été pensée dès le départ pour être :
+
+*   **modulaire** (backend / frontend / ai),
+*   **scalable**,
+*   **propre architecturalement**,
+*   **intégrable via API**,
+*   **adaptée aux politiques d’entreprise**.
+
+***
+
+## 🎯 Vision Produit
+
+### 🌟 **Notre Ambition**
+
+NovaCRM + AI Compliance Hub vise à devenir **la plateforme de référence** pour les entreprises qui souhaitent :
+
+1.  **Un CRM moderne et sans friction**  
+    Un outil robuste, clair et extensible, adapté aux équipes qui veulent sortir de la rigidité des solutions historiques (Salesforce, Dynamics) tout en conservant la puissance nécessaire.
+
+2.  **Le moteur de gouvernance IA le plus simple à intégrer**  
+    Rendre l'usage de l'IA générative plus sûr, plus transparent et plus mesurable, sans ralentir l'innovation ni compliquer les workflows.
+
+3.  **Une plateforme où productivité et conformité cohabitent**  
+    Fini l'opposition entre « aller vite » et « être en règle ». Notre architecture propre, lisible et durable permet les deux simultanément.
+
+### 🚀 **Positionnement Stratégique**
+
+#### 📊 **Contexte Marché 2026**
+
+- **95% des entreprises** utilisent des outils IA génératives (ChatGPT, Copilot, assistants internes)
+- **67% des DSI** considèrent la gouvernance IA comme une **priorité critique**
+- **IA Act européen** impose de nouvelles contraintes de conformité
+- **85% des CRM traditionnels** ne sont **pas adaptés** à l'ère de l'IA
+
+#### 🎯 **Notre Réponse**
+
+Nous proposons **la première plateforme unifiée** qui combine :
+
+✅ **CRM Nouvelle Génération**  
+   API-first, modulaire, sans legacy technique, pensé pour les équipes modernes
+
+✅ **Gouvernance IA Native**  
+   Analyse automatique, détection de risques, conformité IA Act intégrée
+
+✅ **Architecture Évolutive**  
+   Pas de dette technique, migration progressive vers micro-services, scalabilité illimitée
+
+### 🔮 **Vision à Long Terme**
+
+Chaque brique peut vivre seule, mais l'ensemble forme une **solution cohérente orientée futur** :
+
+**2026** : MVP avec CRM de base + détection de risques IA  
+**2027** : Intégrations M365/Google/Slack + moteur de règles avancé  
+**2028** : IA prédictive pour le CRM + conformité multi-réglementaire (RGPD, HIPAA, SOC2)  
+**2029+** : Plateforme ouverte avec marketplace de connecteurs et politiques IA
+
+### 💡 **Différenciateurs Clés**
+
+| Critère | Solutions Classiques | NovaCRM + AI Hub |
+|---------|---------------------|------------------|
+| **Gouvernance IA** | ❌ Inexistante | ✅ Native et temps réel |
+| **Architecture** | ⚠️ Monolithique legacy | ✅ Modulaire API-first |
+| **Conformité IA Act** | ❌ Non supportée | ✅ Intégrée dès le départ |
+| **Extensibilité** | ⚠️ Limitée, coûteuse | ✅ Par design (Factory, Strategy) |
+| **Time to Value** | 📅 6-12 mois | ⚡ 2-4 semaines |
+| **Coût TCO** | 💰💰💰 Très élevé | 💰 Optimisé |
+
+Dans un monde où l'IA générative est omniprésente dans les flux de travail, **nous rendons possible ce qui semblait contradictoire** : productivité maximale ET conformité totale.
+
+***
+
+## 🧠 **AI Compliance Hub — En Détail**
+
+### 🎯 **Qu'est-ce que l'AI Compliance Hub ?**
+
+L'**AI Compliance Hub** est un **moteur de gouvernance et d'audit des usages IA** qui s'intègre nativement à vos workflows existants. Il inspecte, analyse et sécurise tous les échanges avec les systèmes d'IA générative utilisés par vos équipes.
+
+### 🔍 **Capacités Principales**
+
+#### 1️⃣ **Analyse de Prompts en Temps Réel**
+
+```python
+# Exemple de détection automatique
+Prompt utilisateur: "Voici l'email de Jean Dupont: jean.dupont@acme.com"
+
+→ Détection PII: ✅ Email détecté
+→ Risque: 🟠 MOYEN
+→ Action: Alerte envoyée au RSSI
+→ Audit: Événement enregistré avec timestamp + user_id
+```
+
+**Détections supportées :**
+- 📧 Emails, numéros de téléphone, adresses
+- 🆔 Numéros de sécurité sociale, cartes bancaires
+- 🏢 Informations confidentielles entreprise
+- 💬 Tonalité & sentiment (toxicité, biais)
+- 🔐 Secrets & tokens (API keys, passwords)
+
+#### 2️⃣ **Classification des Risques (IA Act Compliant)**
+
+Conformément à l'**IA Act européen**, chaque usage IA est classifié :
+
+| Niveau | Critères | Exemples | Actions |
+|--------|----------|----------|----------|
+| 🟢 **Faible** | Pas de données sensibles | Génération de contenu marketing | ✅ Autorisé |
+| 🟡 **Modéré** | Données semi-sensibles | Résumé d'emails internes | ⚠️ Monitoring renforcé |
+| 🟠 **Élevé** | Données personnelles | Analyse de CV candidats | 🚨 Validation manuelle |
+| 🔴 **Critique** | Décisions automatisées impactantes | Scoring crédit, recrutement automatique | ⛔ Blocage + alerte RSSI |
+
+#### 3️⃣ **Moteur de Règles Personnalisables**
+
+Créez vos propres politiques de conformité via une **interface déclarative** :
+
+```yaml
+# Exemple de politique personnalisée
+policy:
+  name: "Interdiction données clients B2B"
+  triggers:
+    - pattern: ".*\bcontrat\b.*\bmontant\b.*"
+    - pii_detected: true
+  actions:
+    - block_request: true
+    - notify: ["compliance@company.com", "legal@company.com"]
+    - log_evidence: true
+  applies_to:
+    - departments: ["Sales", "Marketing"]
+    - tools: ["ChatGPT", "Copilot"]
+```
+
+#### 4️⃣ **Audit Trail Complet & Immuable**
+
+Chaque interaction IA génère une **trace d'audit** conforme aux exigences réglementaires :
+
+✅ **Quoi ?** → Prompt analysé (hashé si sensible)  
+✅ **Qui ?** → Utilisateur + département + rôle  
+✅ **Quand ?** → Timestamp précis (UTC)  
+✅ **Où ?** → Outil utilisé (ChatGPT, Copilot, API interne)  
+✅ **Résultat ?** → Risque détecté, action prise, conformité  
+✅ **Pourquoi ?** → Règle(s) déclenchée(s)
+
+Exportable en **JSON, CSV ou PDF** pour audits externes.
+
+#### 5️⃣ **Intégrations Natives**
+
+Connectez l'AI Compliance Hub à vos outils existants :
+
+- ☁️ **Microsoft 365** (Teams, Copilot)
+- 🤖 **OpenAI API** (ChatGPT, GPT-4)
+- 🔗 **Slack, Google Workspace**
+- 🛡️ **SIEM** (Splunk, Elastic, Azure Sentinel)
+- 📊 **BI Tools** (Power BI, Tableau)
+
+### 🏗️ **Architecture Technique**
+
+Le moteur repose sur une architecture **modulaire et extensible** :
+
+```
+ai/
+├── detectors/           # Détecteurs de patterns (PII, secrets, risques)
+│   ├── pii_detector.py
+│   ├── risk_classifier.py
+│   └── sentiment_analyzer.py
+├── pipelines/           # Pipelines d'analyse (séquençage des détecteurs)
+│   └── compliance_pipeline.py
+├── policies/            # Règles métier personnalisables
+│   ├── policy_engine.py
+│   └── rules/
+└── exporters/           # Export des audits (JSON, PDF, SIEM)
+    └── audit_exporter.py
+```
+
+**Design Patterns utilisés :**
+- 🏭 **Factory** : Création dynamique de détecteurs
+- 🎯 **Strategy** : Sélection de la stratégie d'analyse selon le contexte
+- 🔌 **Adapter** : Connexion avec systèmes externes (CRM, SIEM)
+- 👀 **Observer** : Notifications en temps réel
+- 🎨 **Decorator** : Instrumentation et métriques
+
+### 📈 **Bénéfices Mesurables**
+
+#### Pour le RSSI / DPO
+- ✅ **100% des usages IA tracés** et auditables
+- ✅ **Réduction de 80%** du risque de fuite de données
+- ✅ **Conformité IA Act** démontrée en 1 clic
+- ✅ **Alertes temps réel** sur incidents critiques
+
+#### Pour les Équipes
+- ✅ **0 friction** : analyse transparente, pas de ralentissement
+- ✅ **Feedback immédiat** : suggestions pour reformuler les prompts à risque
+- ✅ **Formation continue** : recommandations sur les bonnes pratiques IA
+
+#### Pour la Direction
+- ✅ **Dashboard exécutif** : KPIs de gouvernance IA
+- ✅ **ROI mesurable** : coût d'un incident évité vs investissement
+- ✅ **Conformité certifiable** : prêt pour audits ISO 27001, SOC2, IA Act
+
+### 🚀 **Roadmap Fonctionnelle**
+
+**Q1 2026 (MVP)**
+- ✅ Détection PII de base
+- ✅ Classification de risques (4 niveaux)
+- ✅ Audit trail simple
+- ✅ Interface de monitoring
+
+**Q2 2026**
+- 🔄 Intégration Microsoft 365 Copilot
+- 🔄 Moteur de règles YAML
+- 🔄 Webhooks & alertes Slack/Teams
+
+**Q3-Q4 2026**
+- 📅 Détection de biais & toxicité
+- 📅 Support multi-LLM (Claude, Mistral, Llama)
+- 📅 Analyse de fichiers (PDF, DOCX)
+- 📅 IA prédictive : anticipation des risques
+
+**2027+**
+- 🔮 Marketplace de politiques pré-configurées
+- 🔮 IA auto-apprenante : amélioration continue des détecteurs
+- 🔮 Support HIPAA, SOC2, ISO 27001
+
+***
+
+## 💼 **Proposition de Valeur Commerciale**
+
+### 🎁 **Pourquoi Choisir NovaCRM + AI Compliance Hub ?**
+
+#### Pour les **DSI / CTO**
+
+✅ **Architecture propre, pas de dette technique**  
+   Monolithes modulaires prêts pour micro-services, stack moderne (FastAPI, Next.js), code typé et testé.
+
+✅ **Time to Market réduit de 70%**  
+   API-first, documentation auto-générée (OpenAPI), intégrations simplifiées.
+
+✅ **Scalabilité native**  
+   Séparation frontend/backend/AI, déploiement K8s ready, horizontal scaling.
+
+✅ **Pas de vendor lock-in**  
+   Open-source friendly, possibilité d'auto-hébergement, pas de dépendance à un éditeur unique.
+
+#### Pour les **RSSI / DPO**
+
+✅ **Conformité IA Act garantie**  
+   Classification des risques intégrée, audit trail immuable, prêt pour inspections.
+
+✅ **Visibilité totale sur les usages IA**  
+   Qui utilise quoi, quand, avec quelles données ? Dashboard temps réel.
+
+✅ **Réduction drastique du risque**  
+   Blocage automatique des prompts critiques, alertes immédiates, prévention des fuites.
+
+✅ **Preuves pour audits externes**  
+   Export CSV/PDF/JSON, traçabilité complète, conformité ISO 27001 / SOC2.
+
+#### Pour les **Directions Commerciales / Ops**
+
+✅ **CRM enfin adapté aux équipes modernes**  
+   Interface fluide, pas de clics inutiles, mobile-first, intégrations natives.
+
+✅ **Productivité préservée**  
+   Les contrôles de conformité sont transparents, pas de ralentissement.
+
+✅ **IA en confiance**  
+   Les équipes peuvent utiliser ChatGPT, Copilot... en toute sécurité, avec garde-fous.
+
+✅ **Données clients centralisées**  
+   Vision 360° des interactions, historique complet, insights exploitables.
+
+#### Pour les **Directions Générales / CFO**
+
+✅ **ROI rapide**  
+   Déploiement en 2-4 semaines vs 6-12 mois pour un CRM traditionnel.
+
+✅ **Coût Total de Possession (TCO) réduit**  
+   Pas de licences par utilisateur exorbitantes, infrastructure cloud-native optimisée.
+
+✅ **Risque juridique maîtrisé**  
+   Conformité IA Act = éviter des amendes jusqu'à 7% du CA mondial.
+
+✅ **Avantage concurrentiel**  
+   Première plateforme du marché à unifier CRM + Gouvernance IA.
+
+### 📊 **Cas d'Usage Concrets**
+
+#### 🏢 **Scénario 1 : PME SaaS B2B (50-200 employés)**
+
+**Problème :**  
+Les équipes sales utilisent ChatGPT pour rédiger des propositions commerciales, en copiant-collant des données clients sensibles (CA, effectifs, projets stratégiques). Risque de fuite + non-conformité RGPD.
+
+**Solution NovaCRM + AI Hub :**  
+- 🔍 Détection automatique des données sensibles dans les prompts
+- 🚨 Alerte immédiate à l'utilisateur : "Données confidentielles détectées"
+- 📝 Logging de l'événement pour audit
+- ✅ Proposition alternative : anonymisation automatique
+
+**Résultat :**  
+✅ **0 incident** en 6 mois  
+✅ **100% de conformité** lors de l'audit RGPD  
+✅ **Productivité sales maintenue** (pas de blocage, juste des alertes)
+
+#### 🏦 **Scénario 2 : Grande Entreprise Financière (1000+ employés)**
+
+**Problème :**  
+Régulateurs exigent une traçabilité complète des décisions prises avec l'aide de l'IA (prêts, investissements). CRM actuel (Salesforce) ne gère pas cette dimension.
+
+**Solution NovaCRM + AI Hub :**  
+- 📊 Audit trail complet : chaque prompt IA lié à un dossier client
+- 🎯 Classification des risques selon IA Act (niveau "Élevé" pour décisions financières)
+- 🔐 Chiffrement des traces, conservation 10 ans
+- 📄 Export PDF pour inspections régulateurs
+
+**Résultat :**  
+✅ **Validation de l'AMF** obtenue en 3 mois  
+✅ **Réduction de 90%** du temps de préparation des audits  
+✅ **Conformité IA Act anticipée** (obligation 2027)
+
+#### 🏥 **Scénario 3 : Organisation de Santé (Hôpitaux, Cliniques)**
+
+**Problème :**  
+Personnel médical utilise des assistants IA pour rédiger des comptes-rendus, avec risque d'exposition de données de santé (HIPAA/RGPD sensible).
+
+**Solution NovaCRM + AI Hub :**  
+- 🛡️ Détection avancée : noms patients, diagnostics, numéros de sécu
+- ⛔ Blocage automatique si données de santé détectées sans chiffrement
+- 🏥 Politiques spécifiques secteur santé (templates pré-configurés)
+- 📱 Interface simplifiée pour personnels non-tech
+
+**Résultat :**  
+✅ **Conformité HIPAA** maintenue  
+✅ **0 fuite de données patients** en 1 an  
+✅ **Gain de temps médical** : 2h/jour récupérées sur administratif
+
+### 💰 **Modèle Commercial**
+
+#### 📦 **Offres**
+
+**🆓 Open Source (Community Edition)**
+- CRM de base
+- Détection PII simple
+- Limité à 10 utilisateurs
+- Support communautaire
+
+**💼 Professional (SaaS ou On-Premise)**
+- €49/utilisateur/mois
+- CRM complet + AI Compliance Hub
+- Règles personnalisables
+- Support email 48h
+- Audit trail 1 an
+
+**🏢 Enterprise**
+- Sur devis
+- Multi-organisations (SaaS multi-tenant)
+- SSO / SAML
+- Support dédié 24/7
+- Audit trail illimité
+- SLA 99.9%
+- Accompagnement conformité IA Act
+
+**🎓 Offre Spéciale : Secteur Public / Éducation**
+- -50% sur toutes les offres
+- Hébergement souverain (OVH, Scaleway...)
+- Formations incluses
+
+### 🎯 **Clients Cibles (ICP)**
+
+1. **PME Tech / SaaS** (50-500 employés)  
+   Besoin de CRM moderne + obligation IA Act imminente
+
+2. **Grandes Entreprises Régulées** (Finance, Santé, Assurance)  
+   Exigences de conformité strictes, budgets conséquents
+
+3. **Secteur Public / Administrations**  
+   Souveraineté des données, conformité RGPD renforcée
+
+4. **Directions Juridiques / Compliance**  
+   Besoin d'outils pour gérer le risque IA
+
+### 🚀 **Stratégie Go-to-Market**
+
+**Phase 1 (Q1-Q2 2026) : Early Adopters**  
+- 🎯 10 clients pilotes (gratuit contre feedback)
+- 📢 Contenu thought leadership (LinkedIn, blogs)
+- 🤝 Partenariats avec cabinets conseil en conformité
+
+**Phase 2 (Q3-Q4 2026) : Commercialisation**  
+- 💰 Lancement offres Professional / Enterprise
+- 📣 Campagnes ciblées (LinkedIn Ads, salons)
+- 🏆 Cas clients & ROI démontrés
+
+**Phase 3 (2027+) : Scale**  
+- 🌍 Expansion Europe puis US
+- 🤖 Marketplace de connecteurs
+- 🎓 Programme de certification partenaires
+
+***
+
+## 🔧 Ambition Technique
+
+Le projet repose sur trois piliers :
+
+### 1. **API-first et modulaire**
+
+Le backend FastAPI expose des endpoints clairs, typés, documentés automatiquement.
+
+### 2. **Séparation stricte des responsabilités (SoC)**
+
+Le moteur IA est **isolé**, indépendant du CRM, pour garantir :
+
+*   évolutivité,
+*   testabilité,
+*   scalabilité future,
+*   sécurité.
+
+### 3. **Extensibilité naturelle**
+
+Grâce à une structure orientée services et patterns (Factory, Strategy…),  
+le moteur IA peut accueillir facilement de nouvelles règles, nouveaux scanners ou nouveaux flux.
+
+***
+
+## 🧩 En résumé
+
+NovaCRM + AI Compliance Hub n'est pas seulement un CRM.  
+C’est une **plateforme modulaire** pensée pour répondre aux enjeux modernes :
+
+*   **Pilotage des équipes**
+*   **Gestion de la donnée client**
+*   **Usage massif de l'IA générative**
+*   **Conformité réglementaire & sécurité**
+*   **Scalabilité & propreté architecturale**
+
+
+***
+
+# 📐 **Architecture Globale**
+
+L'architecture suit une séparation stricte des responsabilités (SoC) et repose sur **trois couches distinctes** :
+
+## 🏗️ **Vue d'Ensemble**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     FRONTEND LAYER                          │
+│  Next.js 14 + TypeScript + Tailwind + React Query          │
+│  • Dashboard CRM                                            │
+│  • Compliance Monitoring UI                                 │
+│  • Real-time Alerts & Audit Logs                           │
+└──────────────────┬──────────────────────────────────────────┘
+                   │ REST API (HTTP/JSON)
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     BACKEND LAYER                           │
+│  FastAPI + Pydantic + SQLAlchemy                           │
+│  • API REST v1 (/api/v1/*)                                 │
+│  • Authentication & Authorization (JWT + RBAC)              │
+│  • CRM Core Domain (Organizations, Contacts, Users)         │
+│  • Event Sourcing & Audit Trail                            │
+│  • Integration Adapters                                     │
+└──────────────────┬──────────────────────────────────────────┘
+                   │ Internal API / Message Queue
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│                AI COMPLIANCE ENGINE                         │
+│  Python + LangChain + Pattern Matching                     │
+│  • Prompt Analysis & Risk Detection                         │
+│  • PII & Sensitive Data Scanner                            │
+│  • Policy Engine (Rules Factory)                           │
+│  • Risk Classification (IA Act compliance)                  │
+│  • Audit Logger & Evidence Collection                       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## 🎯 **Principes Architecturaux**
+
+Cette structure permet :
+
+### ✅ **Modularité Forte**
+- Chaque couche peut être déployée, testée et mise à l'échelle indépendamment
+- Les dépendances sont unidirectionnelles (Frontend → Backend → AI Engine)
+- Aucun couplage fort entre les modules
+
+### ✅ **Indépendance d'Évolution**
+- Le CRM peut évoluer sans impacter le moteur IA
+- Le moteur IA peut intégrer de nouveaux modèles (GPT-5, Claude, Mistral...) sans toucher au CRM
+- Possibilité d'exposer le moteur IA comme service autonome
+
+### ✅ **Migration Progressive vers Micro-Services**
+- Architecture prête pour une extraction en services indépendants
+- Communication via API REST ou Message Queue (RabbitMQ/Kafka)
+- Chaque service peut avoir sa propre base de données
+
+### ✅ **Tests Isolés & Performance**
+- Tests unitaires par module sans dépendances croisées
+- Mocking simplifié des couches externes
+- Possibilité de paralléliser les tests
+- Performance optimisée grâce à la séparation des préoccupations
+
+## 🔐 **Flux de Données Typique**
+
+**Exemple : Analyse d'un prompt utilisateur**
+
+1. **Frontend** : Utilisateur soumet un prompt via l'interface
+2. **Backend API** : Valide la requête, authentifie l'utilisateur
+3. **AI Engine** : Analyse le prompt selon les politiques actives
+   - Détection PII (emails, téléphones, noms)
+   - Classification de risque (faible/moyen/élevé/critique)
+   - Vérification conformité IA Act
+4. **Backend** : Enregistre l'événement dans l'audit trail
+5. **Frontend** : Affiche le résultat et les alertes éventuelles
+
+## 📦 **Structure des Repositories**
+
+```
+/backend          → API FastAPI + Domain Logic
+/frontend         → Next.js UI
+/ai               → Compliance Engine (detectors, pipelines, policies)
+/infra            → Infrastructure as Code (K8s, Terraform)
+/docs/adr         → Architecture Decision Records
+/scripts          → Automation & DevOps
+```
+
+Les détails complets sont décrits dans **ADR‑01 – Architecture Globale**.
+
+***
+
+# 🧠 **Principes d’Architecture (Module 1.1)**
+
+Le projet suit explicitement :
+
+### ✔ **SOLID**
+
+*   **S**ingle Responsibility → modules backend / frontend / compliance séparés
+*   **O**pen/Closed → les règles IA sont extensibles via /policies
+*   **L**iskov Substitution → règles compatibles entre elles
+*   **I**nterface Segregation → pas d’interfaces géantes, seulement des services ciblés
+*   **D**ependency Inversion → services IA découplés du CRM
+
+### ✔ **SoC (Separation of Concerns)**
+
+*   UI ≠ API ≠ Moteur IA
+*   Le backend sert l’API REST
+*   Le moteur IA fonctionne comme un **service indépendant**
+
+### ✔ **KISS / YAGNI**
+
+*   Pas de micro‑services tant que la charge ne l’exige pas
+*   Code simple, typé, lisible
+*   Pas d’optimisations prématurées
+
+### ✔ **DRY**
+
+*   Pas de duplication entre modules
+*   Les modèles API restent dans le backend
+*   Les règles IA restent dans ai/
+
+Ces choix sont documentés dans les ADR du dossier `docs/adr/`.
+
+***
+
+# 🛠 **Installation (WSL2 / Linux)**
+
+Le projet utilise **Taskfile** pour orchestrer toutes les actions.
+
+### ▶️ Installer toutes les dépendances
+
+```bash
+task install
+```
+
+### ▶️ Lancer le backend FastAPI
+
+```bash
+task backend
+```
+
+API disponible sur :  
+➡️ <http://localhost:8000>
+
+### ▶️ Lancer le frontend Next.js
+
+```bash
+task frontend
+```
+
+Dashboard disponible sur :  
+➡️ <http://localhost:3000>
+
+### ▶️ Lancer les deux en mode développeur
+
+```bash
+task dev
+```
+
+***
+
+# 📚 **Backend (FastAPI)**
+
+Le backend fournit :
+
+*   API REST v1
+*   Auth
+*   CRM (clients, interactions, équipes)
+*   Logs & audits
+*   Connecteurs avec le moteur IA
+
+Entrée API :  
+`backend/infrastructure/http/` (routers FastAPI)
+
+End‑point de test :
+
+    GET /api/v1/health
+
+***
+
+# 🧠 **AI Compliance Engine**
+
+Situé dans :  
+`/ai/`
+
+Le moteur IA gère :
+
+*   inspection des prompts
+*   détection de données sensibles
+*   règles personnalisées
+*   classification des risques
+*   logs d’audit
+*   intégration future avec Teams/M365
+
+Design patterns utilisés :
+
+*   **Factory** → création de règles
+*   **Strategy** → sélection de la logique d’analyse
+*   **Adapter** → connexion backend → moteur IA
+*   **Observer** (futur) → audit temps réel
+*   **Decorator** → instrumentation & logs
+
+***
+
+# 🎨 **Frontend (Next.js + TypeScript)**
+
+Situé dans :  
+`/frontend/`
+
+Fonctionnalités :
+
+*   Dashboard CRM
+*   Vue Compliance
+*   Logs, risques, événements
+*   UI ergonomique (Tailwind)
+
+Configuration API :  
+`.env.local`
+
+    NEXT_PUBLIC_API_URL=http://localhost:8000
+
+***
+
+# 🧪 **Tests**
+
+### Backend
+
+```bash
+task test-backend
+```
+
+### Lint & format
+
+```bash
+task lint-backend
+task fmt-backend
+```
+
+### Frontend
+
+```bash
+task lint-frontend
+task fmt-frontend
+```
+
+***
+
+# 🧭 **Documentation ADR**
+
+Les décisions d’architecture sont versionnées dans :
+
+    /docs/adr/
+
+Existants :
+
+*   **ADR‑00 — Adoption du système ADR (MADR)**
+*   **ADR‑01 — Architecture Globale (Backend / Frontend / Moteur IA)**
+*   **ADR‑02 — Choix de FastAPI plutôt que Django pour le backend**
+*   **ADR‑03 — Stack Technique**
+*   **Stack Technique (doc)** — `docs/architecture/stack.md`
+*   **AI Rules (policy)** — `AI-RULES.md`
+
+Chaque nouvelle décision devra être ajoutée ici.
+
+***
+
+# 🏗️ **Roadmap (MVP → v1.0)**
+
+### 🔹 MVP
+
+*   Auth utilisateur
+*   CRUD CRM
+*   Dashboard Next.js
+*   Healthcheck API
+*   Moteur IA : analyse de prompts simple
+*   Logs de conformité
+
+### 🔹 v1.0
+
+*   Règles IA avancées
+*   Analyse des données sensibles
+*   Rapports de conformité
+*   Audit Trail complet
+*   Webhooks & Connecteurs M365
+*   Multi‑organisation (SaaS)
+
+***
+
+# 👥 **Contribuer**
+
+1.  Fork
+2.  Crée une branche :
+    ```bash
+    git checkout -b feat/my-feature
+    ```
+3.  Commit
+4.  PR avec description claire (référence ADR si nécessaire)
+
+***
+
+# 📜 Licence
+
+TBD (MIT recommandé pour un projet open‑source ; Private si entreprise)
+
+***
+

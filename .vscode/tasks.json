@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🚀 Nova: Launch Backend",
+            "type": "shell",
+            "command": "cd backend; if (Test-Path '.venv/Scripts/Activate.ps1') { . .venv/Scripts/Activate.ps1 }; python manage.py runserver",
+            "problemMatcher": [],
+            "group": { "kind": "build", "isDefault": true }
+        },
+        {
+            "label": "🌐 Nova: Launch Frontend",
+            "type": "shell",
+            "command": "cd frontend; npm run dev",
+            "problemMatcher": []
+        },
+        {
+            "label": "🔍 Nova: AI Risk Scan",
+            "type": "shell",
+            "command": "cd ai/detectors; python detect_risks.py",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,118 @@
+version: "3"
+
+vars:
+  BACKEND_DIR: "./backend"
+  FRONTEND_DIR: "./frontend"
+  COMPLIANCE_DIR: "./compliance_engine"
+  VENV_DIR: "./backend/.venv"
+
+tasks:
+
+  # ------------------------------------------------------------
+  # INSTALLATION TOTALE
+  # ------------------------------------------------------------
+  install:
+    desc: "Installation complète : python venv + backend deps + frontend npm install"
+    deps: [venv, install-backend, install-frontend]
+
+  # ------------------------------------------------------------
+  # PYTHON / BACKEND
+  # ------------------------------------------------------------
+  venv:
+    desc: "Crée l'environnement Python"
+    cmds:
+      - python3 -m venv {{.VENV_DIR}}
+      - '{{.VENV_DIR}}/bin/pip install --upgrade pip setuptools wheel'
+
+  install-backend:
+    desc: "Installe les dépendances backend (FastAPI, Uvicorn...)"
+    cmds:
+      - '{{.VENV_DIR}}/bin/pip install -r {{.BACKEND_DIR}}/requirements.txt'
+
+  backend:
+    desc: "Lance l'API FastAPI (port 8000)"
+    cmds:
+      - '{{.VENV_DIR}}/bin/uvicorn api.main:app --reload --port 8000'
+    dir: "{{.BACKEND_DIR}}"
+
+  test-backend:
+    desc: "Lance pytest"
+    cmds:
+      - '{{.VENV_DIR}}/bin/pytest -q'
+    dir: "{{.BACKEND_DIR}}"
+
+  lint-backend:
+    desc: "Lint (ruff + black)"
+    cmds:
+      - '{{.VENV_DIR}}/bin/ruff check {{.BACKEND_DIR}}'
+      - '{{.VENV_DIR}}/bin/black --check {{.BACKEND_DIR}}'
+
+  fmt-backend:
+    desc: "Format Python"
+    cmds:
+      - '{{.VENV_DIR}}/bin/ruff format {{.BACKEND_DIR}}'
+      - '{{.VENV_DIR}}/bin/black {{.BACKEND_DIR}}'
+
+  # ------------------------------------------------------------
+  # FRONTEND
+  # ------------------------------------------------------------
+  install-frontend:
+    desc: "npm install du frontend"
+    cmds:
+      - npm install
+    dir: "{{.FRONTEND_DIR}}"
+
+  frontend:
+    desc: "Lance le serveur Next.js (port 3000)"
+    cmds:
+      - npm run dev
+    dir: "{{.FRONTEND_DIR}}"
+
+  lint-frontend:
+    desc: "ESLint"
+    cmds:
+      - npx eslint .
+    dir: "{{.FRONTEND_DIR}}"
+
+  fmt-frontend:
+    desc: "Prettier"
+    cmds:
+      - npx prettier -w .
+    dir: "{{.FRONTEND_DIR}}"
+
+  # ------------------------------------------------------------
+  # COMPLIANCE ENGINE
+  # ------------------------------------------------------------
+  scan:
+    desc: "Exécute le moteur de règles IA (ex: analyse fichiers)"
+    cmds:
+      - '{{.VENV_DIR}}/bin/python scanner/main.py'
+    dir: "{{.COMPLIANCE_DIR}}"
+
+  # ------------------------------------------------------------
+  # ENVIRONNEMENT DEV COMPLET
+  # ------------------------------------------------------------
+  dev:
+    desc: "Lance backend + frontend en parallèle (comme nova-start)"
+    cmds:
+      - task backend &
+      - task frontend &
+      - wait
+
+  # ------------------------------------------------------------
+  # UTILITAIRES
+  # ------------------------------------------------------------
+  ports:
+    desc: "Liste les processus sur les ports 8000 et 3000"
+    cmds:
+      - "echo 'Backend (8000):'"
+      - "lsof -i :8000 || true"
+      - "echo 'Frontend (3000):'"
+      - "lsof -i :3000 || true"
+
+  kill:
+    desc: "Tue les processus sur les ports 8000 et 3000"
+    cmds:
+      - "kill -9 $(lsof -t -i:8000) 2>/dev/null || true"
+      - "kill -9 $(lsof -t -i:3000) 2>/dev/null || true"
+      - "echo 'Ports libérés.'"

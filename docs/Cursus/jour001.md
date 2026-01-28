@@ -527,18 +527,20 @@ cd /mnt/c/Perso/nova-crm
 pwd
 # Output : /mnt/c/Perso/nova-crm
 
+# ===== OPTION A : Installation Python dans WSL2 (Ubuntu) =====
+
 # Installer Python et dépendances système
 sudo apt-get update
 sudo apt-get install -y python3.10 python3.10-venv python3-pip git
 
 # Vérifier version Python
 python3 --version
-# Output attendu : Python 3.10.x
+# Output attendu : Python 3.10.x ou 3.12.x
 
 # Créer environnement virtuel
 python3 -m venv .venv
 
-# Activer environnement virtuel
+# Activer environnement virtuel (WSL2/Linux)
 source .venv/bin/activate
 # Prompt change : (.venv) user@machine:~/nova-crm$
 
@@ -553,9 +555,101 @@ python -c "import fastapi; print(f'FastAPI version : {fastapi.__version__}')"
 # Output : FastAPI version : 0.104.1
 ```
 
+**OU**
+
+**Dans PowerShell (Windows)** :
+
+```powershell
+# ===== OPTION B : Installation Python dans Windows (PowerShell) =====
+
+PS C:\> cd C:\Perso\nova-crm
+PS C:\Perso\nova-crm> # Vérifier version Python (vous avez déjà Python installé)
+PS C:\Perso\nova-crm> python --version
+Python 3.12.4
+
+PS C:\Perso\nova-crm> # Créer environnement virtuel
+PS C:\Perso\nova-crm> python -m venv .venv
+
+PS C:\Perso\nova-crm> # ⚠️ IMPORTANT : Autoriser l'exécution de scripts PowerShell
+PS C:\Perso\nova-crm> # Si vous obtenez l'erreur "l'exécution de scripts est désactivée"
+PS C:\Perso\nova-crm> # Exécuter cette commande UNE SEULE FOIS :
+PS C:\Perso\nova-crm> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Sortie attendue :
+# Modification de la stratégie d'exécution
+# La stratégie d'exécution permet de vous protéger contre les scripts non approuvés...
+# Voulez-vous modifier la stratégie d'exécution ? [O] Oui  [N] Non  [S] Suspendre  [?] Aide (la valeur par défaut est « N ») : O
+
+PS C:\Perso\nova-crm> # Activer environnement virtuel (Windows PowerShell)
+PS C:\Perso\nova-crm> .\.venv\Scripts\Activate.ps1
+(.venv) PS C:\Perso\nova-crm>
+
+(.venv) PS C:\Perso\nova-crm> # Mettre à jour pip
+(.venv) PS C:\Perso\nova-crm> python -m pip install --upgrade pip setuptools wheel
+
+(.venv) PS C:\Perso\nova-crm> # Installer dépendances backend
+(.venv) PS C:\Perso\nova-crm> pip install -r backend\requirements.txt
+
+(.venv) PS C:\Perso\nova-crm> # Vérifier installation FastAPI
+(.venv) PS C:\Perso\nova-crm> python -c "import fastapi; print(f'FastAPI version : {fastapi.__version__}')"
+FastAPI version : 0.104.1
+```
+
 ---
 
-### 📋 ÉTAPE 5 : Créer le domaine métier (core)
+### � BONUS : Vérifier les Conflits de Dépendances
+
+**Pourquoi vérifier ?** Détecter les incompatibilités AVANT de coder évite des heures de debug.
+
+**Méthode 1 : pip check (Rapide)** :
+
+```powershell
+(.venv) PS C:\Perso\nova-crm> pip check
+
+# ✅ Sortie attendue si tout est OK :
+# No broken requirements found.
+
+# ❌ Sortie si conflit détecté :
+# fastapi 0.104.1 requires pydantic>=2.0.0, but you have pydantic 1.10.0
+```
+
+**Méthode 2 : pipdeptree (Visuel)** :
+
+```powershell
+(.venv) PS C:\Perso\nova-crm> pip install pipdeptree
+(.venv) PS C:\Perso\nova-crm> pipdeptree
+
+# Affiche arbre des dépendances :
+# fastapi==0.104.1
+#   ├── pydantic==2.5.2 [required: >=2.0.0]
+#   ├── starlette==0.27.0 [required: >=0.27.0]
+#   └── ...
+
+# Détecter conflits uniquement :
+(.venv) PS C:\Perso\nova-crm> pipdeptree --warn fail
+```
+
+**Méthode 3 : Simulation d'installation (Python 3.10+)** :
+
+```powershell
+(.venv) PS C:\Perso\nova-crm> pip install -r backend\requirements.txt --dry-run
+
+# Simule l'installation SANS rien installer
+# Affiche les conflits potentiels
+```
+
+**Nos dépendances sont-elles compatibles ?** ✅ OUI
+
+| Package | Version | Requiert | Compatible ? |
+|---------|---------|----------|--------------|
+| FastAPI | 0.104.1 | pydantic>=2.0.0 | ✅ (on a 2.5.2) |
+| Uvicorn | 0.24.0 | - | ✅ |
+| SQLAlchemy | 2.0.23 | - | ✅ |
+| Pytest | 7.4.3 | - | ✅ |
+
+---
+
+### �📋 ÉTAPE 5 : Créer le domaine métier (core)
 
 **Fichier** : `backend/core/domain/health.py`
 
@@ -1685,7 +1779,28 @@ Le serveur de base de données crash à T=5s. L'application backend continue de 
 
 ## 📌 Notes & Astuces
 
-### Raccourcis Terminal WSL2
+### Raccourcis Terminal
+
+**Windows (PowerShell)** :
+
+```powershell
+# Activer virtualenv rapidement
+.\.venv\Scripts\Activate.ps1
+
+# Vérifier conflits dépendances
+pip check
+
+# Lister packages installés avec versions
+pip list
+
+# Voir processus Python (port 8000)
+netstat -ano | findstr :8000
+
+# Tuer processus par PID
+taskkill /PID <PID> /F
+```
+
+**WSL2/Linux (Bash)** :
 
 ```bash
 # Activer virtualenv rapidement
@@ -1704,11 +1819,24 @@ ps aux | grep python
 ### Erreurs Fréquentes & Solutions
 
 ```
+ERREUR : Impossible de charger le fichier .\.venv\Scripts\Activate.ps1, car l'exécution de scripts est désactivée
+→ Cause : PowerShell bloque l'exécution de scripts par défaut (sécurité Windows)
+→ Solution : Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+→ Alternative : Utiliser cmd au lieu de PowerShell : .venv\Scripts\activate.bat
+
 ERREUR : ModuleNotFoundError: No module named 'fastapi'
-→ Solution : pip install -r backend/requirements.txt
+→ Solution : pip install -r backend\requirements.txt
 
 ERREUR : Address already in use (port 8000)
-→ Solution : pkill -f uvicorn (ou utiliser un autre port : --port 8001)
+→ Solution Windows : netstat -ano | findstr :8000 puis taskkill /PID <PID> /F
+→ Solution WSL2 : pkill -f uvicorn (ou utiliser un autre port : --port 8001)
+
+ERREUR : Connection refused (localhost:8000)
+→ Solution : Serveur non lancé. Faire : cd backend; python -m uvicorn infrastructure.http.main:app --reload
+
+ERREUR : .env not found
+→ Solution : cp backend\.env.example backend\.env (Windows)
+→ Solution : cp backend/.env.example backend/.env (WSL2)re port : --port 8001)
 
 ERREUR : Connection refused (localhost:8000)
 → Solution : Serveur non lancé. Faire : cd backend && python -m uvicorn ...

@@ -1,0 +1,43 @@
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# === Variables d'environnement ===
+.env
+.env.local
+.env.*.local
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Node (Frontend) ===
+node_modules/
+npm-debug.log
+yarn-error.log
+.next/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Base de données ===
+*.db
+*.sqlite
+*.sqlite3

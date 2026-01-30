@@ -448,8 +448,12 @@ IA_ACT_ENABLED=true
 
 ```txt
 # === Framework Web ===
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
+# ⚠️ IMPORTANT : Pincer la version de FastAPI pour éviter breaking changes
+# fastapi[standard]==0.128.0 signifie EXACTEMENT 0.128.0
+# Raison : FastAPI < 1.0.0 suit Semantic Versioning (MINOR = breaking changes possibles)
+# Choix de 0.128.0 : Version stable la plus récente (27 décembre 2025)
+fastapi[standard]==0.128.0
+uvicorn[standard]==0.40.0
 
 # === Base de données ===
 sqlalchemy==2.0.23
@@ -592,7 +596,7 @@ PS C:\Perso\nova-crm> .\.venv\Scripts\Activate.ps1
 
 (.venv) PS C:\Perso\nova-crm> # Vérifier installation FastAPI
 (.venv) PS C:\Perso\nova-crm> python -c "import fastapi; print(f'FastAPI version : {fastapi.__version__}')"
-FastAPI version : 0.104.1
+FastAPI version : 0.128.0
 ```
 
 ---
@@ -629,7 +633,7 @@ FastAPI version : 0.104.1
 (.venv) PS C:\Perso\nova-crm> pipdeptree --warn fail
 ```
 
-**Méthode 3 : Simulation d'installation (Python 3.10+)** :
+**Méthode 3 : Simulation d'installation (Python 3.12+)** :
 
 ```powershell
 (.venv) PS C:\Perso\nova-crm> pip install -r backend\requirements.txt --dry-run
@@ -796,7 +800,7 @@ class HealthCheckDetailedResponse(BaseModel):
 
 ### 📋 ÉTAPE 7 : Créer les routes HTTP
 
-**Fichier** : `backend/infrastructure/http/routes/health.py`
+**Fichier** : `backend/infrastructure/http/routes/health_route.py`
 
 ```python
 """

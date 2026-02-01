@@ -73,7 +73,7 @@ T=2s : Audit trail immuable enregistre :
 **Étape 1 : Clone et naviguez**
 ```powershell
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 
 # Listez la structure
 ls -la
@@ -319,7 +319,7 @@ cat "ADR‑03 — Stack Technique.md" | head -60
 
 ```powershell
 # Terminal : vérifiez que git est clean
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 git status
 # Doit montrer "On branch main, nothing to commit"
 

@@ -41,3 +41,9 @@ Thumbs.db
 *.db
 *.sqlite
 *.sqlite3
+
+# === Documentation de travail ===
+docs/Audits/
+docs/Compréhension/
+docs/Cursus/
+docs/Labs/

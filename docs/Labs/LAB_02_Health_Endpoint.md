@@ -577,7 +577,7 @@ if __name__ == "__main__":
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Activer virtualenv (si pas déjà fait)
 source .venv/bin/activate
@@ -678,7 +678,7 @@ http://localhost:8000/redoc
 
 ```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Activer virtualenv
 source .venv/bin/activate

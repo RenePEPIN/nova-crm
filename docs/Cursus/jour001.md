@@ -527,9 +527,9 @@ wsl
 
 ```bash
 # Naviguer vers le projet (Windows C:\ = /mnt/c/ dans WSL2)
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 pwd
-# Output : /mnt/c/Perso/nova-crm
+# Output : /home/renep/dev/nova-crm
 
 # ===== OPTION A : Installation Python dans WSL2 (Ubuntu) =====
 
@@ -1322,7 +1322,7 @@ if __name__ == "__main__":
 ```bash
 # Dans WSL2, avec virtualenv activé
 source .venv/bin/activate
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 
 # Lancer tous les tests
 pytest tests/backend/test_health.py -v

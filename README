@@ -2,6 +2,21 @@
 
 # 🚀 **NovaCRM + AI Compliance Hub**
 
+## 📋 Requirements Minimales
+
+| Élément | Version | Statut |
+|---------|---------|--------|
+| **Python** | 3.12+ | ✅ Requis |
+| **FastAPI** | 0.128.0 | ✅ Pinné |
+| **SQLAlchemy** | 2.0.46 | ✅ ORM |
+| **Pydantic** | 2.12.5 | ✅ Validation |
+| **Next.js** | 14+ | ✅ Frontend |
+| **Git** | 2.0+ | ✅ VCS |
+
+Voir [docs/Labs/LAB_01_Setup_Environment.md](docs/Labs/LAB_01_Setup_Environment.md) pour installation.
+
+---
+
 **NovaCRM** est un CRM moderne, modulaire et entièrement **API‑first**, conçu pour offrir une base solide aux équipes commerciales, opérationnelles et techniques. Il fournit les briques essentielles d’un CRM nouvelle génération : gestion des organisations, des utilisateurs, des contacts, des interactions, des permissions, des actions automatisées, et une architecture pensée pour évoluer proprement dans le temps.
 
 À côté de ce socle CRM, **AI Compliance Hub** apporte une brique totalement unique :  

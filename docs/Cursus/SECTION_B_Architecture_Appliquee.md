@@ -26,7 +26,7 @@
   ├─ CFO (comptabilité, finances)
   ├─ CHRO (ressources humaines)
   └─ CTO (IT, systèmes)
-  
+
   Si VP Sales part, autres continuent.
   Chacun expert dans son domaine.
   Peuvent croître indépendamment.
@@ -34,11 +34,11 @@
 
 **Appliqué à NovaCRM** :
 
-| Module | Responsabilité | Raison de changer |
-|--------|-----------------|-------------------|
-| **Backend (FastAPI)** | Orchestration, persistance, API | Changement métier (contacts, clients, rules CRUD) |
-| **Frontend (Next.js)** | Affichage, UX, interactions utilisateur | Changement UI/UX, design system |
-| **AI Engine (Python)** | Analyse compliance, détection risques | Nouvelle règle, nouvelle détection (PII, secrets) |
+| Module                 | Responsabilité                          | Raison de changer                                 |
+| ---------------------- | --------------------------------------- | ------------------------------------------------- |
+| **Backend (FastAPI)**  | Orchestration, persistance, API         | Changement métier (contacts, clients, rules CRUD) |
+| **Frontend (Next.js)** | Affichage, UX, interactions utilisateur | Changement UI/UX, design system                   |
+| **AI Engine (Python)** | Analyse compliance, détection risques   | Nouvelle règle, nouvelle détection (PII, secrets) |
 
 **Sans SoC** : Changement Engine = recompile tout backend + frontend. Risque de bug. Deploy long.
 
@@ -51,6 +51,7 @@
 **Scénario** : Une nouvelle loi arrive : "Il faut aussi masquer les numéros de Sécurité Sociale".
 
 **Étape 1 : Changement code Engine seul**
+
 ```python
 # ai/detectors/pii_detector.py
 # Avant
@@ -68,6 +69,7 @@ PATTERNS = {
 ```
 
 **Étape 2 : Redeploy Engine uniquement**
+
 ```bash
 cd ai/
 python -m pytest detectors/test_pii_detector.py  # Tests pass ✅
@@ -78,6 +80,7 @@ kubectl set image deployment/nova-engine engine=nova-engine:v2
 ```
 
 **Avantages SoC ici** :
+
 - ✅ Backend code untouched → zéro risque regression
 - ✅ Frontend code untouched → users see same UI
 - ✅ Engine only tested → 5 min, pas 1 hour full test suite
@@ -91,66 +94,60 @@ kubectl set image deployment/nova-engine engine=nova-engine:v2
 
 **Objectif** : Comprendre comment le backend applique SoC.
 
-```powershell
-# Terminal WSL2
-cd /mnt/c/Perso/nova-crm/backend
+```bash
+# Terminal
+cd /home/renep/dev/nova-crm/backend
 
 # Listez la structure
 tree -L 3 -I '__pycache__|*.pyc'
 # Vous devez voir :
 # backend/
 # ├─ core/                          ← Logique métier (SoC)
-# │  ├─ domain/                     ← Modèles métier (Contact, Client, Rule)
+# │  ├─ domain/                     ← Modèles métier (Contact, Health, etc.)
 # │  │  ├─ contact.py               ← Entity Contact
-# │  │  ├─ client.py                ← Entity Client
-# │  │  ├─ audit.py                 ← Entity Audit (append-only)
-# │  │  └─ ...
-# │  └─ services/                   ← Services métier (usecases)
-# │     ├─ contact_service.py       ← CRUD + logic pour contacts
-# │     ├─ compliance_service.py    ← Appel Engine IA
-# │     └─ ...
+# │  │  ├─ health.py                ← Entity Health
+# │  │  └─ ...                      ← Autres entités métier
+# │  └─ use_cases/                  ← Use cases métier (logique applicative)
+# │     ├─ create_contact.py        ← Use case : créer un contact
+# │     ├─ check_compliance.py      ← Use case : vérifier conformité
+# │     └─ ...                      ← Autres use cases
 # │
 # ├─ infrastructure/                ← Techniques (SoC)
 # │  ├─ http/                       ← API REST (FastAPI)
 # │  │  ├─ routes/
-# │  │  │  ├─ contacts.py           ← GET/POST /api/v1/contacts
-# │  │  │  ├─ clients.py            ← GET/POST /api/v1/clients
-# │  │  │  ├─ audit.py              ← GET /api/v1/audit
-# │  │  │  └─ health.py             ← GET /health
-# │  │  ├─ middleware/              ← Middleware
-# │  │  │  ├─ auth.py               ← JWT validation
-# │  │  │  ├─ logging.py            ← Request/response logging
-# │  │  │  └─ error_handler.py      ← Error normalization
+# │  │  │  ├─ contacts.py           ← GET/POST /api/v1/contacts (futur)
+# │  │  │  ├─ clients.py            ← GET/POST /api/v1/clients (futur)
+# │  │  │  └─ health_route.py       ← GET /health
+# │  │  ├─ dto.py                   ← Data Transfer Objects (request/response)
 # │  │  └─ main.py                  ← FastAPI app initialization
 # │  │
-# │  ├─ db/                         ← Persistence (SoC)
-# │  │  ├─ models.py                ← SQLAlchemy ORM models (Entity → DB mapping)
-# │  │  ├─ session.py               ← DB session management
-# │  │  └─ migrations/              ← Alembic versions
+# │  ├─ database/                   ← Persistence (SoC)
+# │  │  ├─ models.py                ← SQLAlchemy ORM models (futur)
+# │  │  ├─ session.py               ← DB session management (futur)
+# │  │  └─ migrations/              ← Alembic versions (futur)
 # │  │
-# │  └─ adapters/                   ← Communication external systems (SoC)
-# │     └─ engine_adapter.py        ← Interface vers AI Engine
+# │  └─ audit/                      ← Audit trail & logging
+# │     └─ ...                      ← Audit logs (futur)
 # │
 # └─ shared/                         ← Code partagé (SoC)
-#    ├─ dto.py                      ← Data Transfer Objects (request/response)
-#    ├─ exceptions.py               ← Custom exceptions
-#    └─ utils.py                    ← Helper functions
+#    └─ ...                         ← Utils, exceptions (futur)
 
 echo "Structure backend explored"
 ```
 
 **Explications SoC** :
 
-| Folder | Role | Change trigger |
-|--------|------|-----------------|
-| `core/domain/` | **Métier** : Entités pures (Contact, Client) | Changement métier (nouveau champ contact?) |
-| `core/services/` | **Logique** : CRUD, validations, orchestration | Changement règles métier (après 30 jours, archiver?) |
-| `infrastructure/http/` | **Présentation** : API REST | Changement contrat API (ajouter endpoint?) |
-| `infrastructure/db/` | **Persistence** : SQL, ORM | Changement schema DB (nouvel index?) |
-| `infrastructure/adapters/` | **Intégration** : Appels externes | Changement Engine IA (nouvelle règle?) |
-| `shared/` | **Partagé** : DTO, exceptions | Changement contrats (nouveau error code?) |
+| Folder                     | Role                                                | Change trigger                               |
+| -------------------------- | --------------------------------------------------- | -------------------------------------------- |
+| `core/domain/`             | **Métier** : Entités pures (Contact, Health, etc.)  | Changement métier (nouveau champ contact?)   |
+| `core/use_cases/`          | **Logique** : Use cases, validations, orchestration | Changement règles métier (nouveau workflow?) |
+| `infrastructure/http/`     | **Présentation** : API REST (routes, DTOs)          | Changement contrat API (ajouter endpoint?)   |
+| `infrastructure/database/` | **Persistence** : SQL, ORM (futur)                  | Changement schema DB (nouvel index?)         |
+| `infrastructure/audit/`    | **Audit** : Logging, traçabilité (futur)            | Changement exigences audit                   |
+| `shared/`                  | **Partagé** : Utils communs (futur)                 | Changement helpers partagés                  |
 
 **Résumé** :
+
 - ✅ Métier isolé de technique (domain/ vs infrastructure/)
 - ✅ API isolée de DB (http/ vs db/)
 - ✅ Engine isolé (adapters/engine_adapter.py = interface simple)
@@ -159,9 +156,9 @@ echo "Structure backend explored"
 
 #### **LAB 2.2 : Explorez la structure réelle du frontend**
 
-```powershell
+```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/frontend
+cd /home/renep/dev/nova-crm/frontend
 
 # Listez la structure
 tree -L 3 -I 'node_modules|\.next|.git'
@@ -235,17 +232,18 @@ echo "Structure frontend explored"
 
 **Explications SoC** :
 
-| Folder | Role | Change trigger |
-|--------|------|-----------------|
-| `app/` | **Pages** : Pages Next.js (routes) | Ajout fonctionnalité (nouvelle page?) |
-| `components/` | **Reusable components** : Buttons, forms, layouts | Changement design system |
-| `lib/api.ts` | **Backend communication** | Changement API backend |
-| `lib/hooks/` | **Custom logic** : Fetch, auth, form state | Changement logique métier frontend |
-| `lib/store/` | **State management** | Changement state flow |
-| `lib/types/` | **Type safety** : DTOs from backend | Changement contrat API |
-| `styles/` | **Styling** | Changement design |
+| Folder        | Role                                              | Change trigger                        |
+| ------------- | ------------------------------------------------- | ------------------------------------- |
+| `app/`        | **Pages** : Pages Next.js (routes)                | Ajout fonctionnalité (nouvelle page?) |
+| `components/` | **Reusable components** : Buttons, forms, layouts | Changement design system              |
+| `lib/api.ts`  | **Backend communication**                         | Changement API backend                |
+| `lib/hooks/`  | **Custom logic** : Fetch, auth, form state        | Changement logique métier frontend    |
+| `lib/store/`  | **State management**                              | Changement state flow                 |
+| `lib/types/`  | **Type safety** : DTOs from backend               | Changement contrat API                |
+| `styles/`     | **Styling**                                       | Changement design                     |
 
 **Résumé** :
+
 - ✅ Pages isolées de composants réutilisables
 - ✅ API isolation (lib/api.ts = point unique de communication)
 - ✅ State management centralisé (lib/store/)
@@ -255,9 +253,9 @@ echo "Structure frontend explored"
 
 #### **LAB 2.3 : Explorez la structure réelle de l'AI Engine**
 
-```powershell
+```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/ai
+cd /home/renep/dev/nova-crm/ai
 
 # Listez la structure
 tree -L 3 -I '__pycache__|*.pyc'
@@ -288,14 +286,15 @@ echo "Structure AI Engine explored"
 
 **Explications SoC** :
 
-| Folder | Role | Change trigger |
-|--------|------|-----------------|
-| `detectors/base.py` | **Interface** : Contrat pour tous les détecteurs | Changement signature (add severity?) |
-| `detectors/pii_detector.py` | **Implémentation** : Une règle concrète | Changement détection PII (add SS#?) |
-| `pipelines/compliance_pipeline.py` | **Orchestration** : Chaîne de traitement | Changement flux (add redaction stage?) |
-| `policies/` | **Configuration** : YAML déclaratif (append-only) | Nouvelle loi (masquer SS#?) |
+| Folder                             | Role                                              | Change trigger                         |
+| ---------------------------------- | ------------------------------------------------- | -------------------------------------- |
+| `detectors/base.py`                | **Interface** : Contrat pour tous les détecteurs  | Changement signature (add severity?)   |
+| `detectors/pii_detector.py`        | **Implémentation** : Une règle concrète           | Changement détection PII (add SS#?)    |
+| `pipelines/compliance_pipeline.py` | **Orchestration** : Chaîne de traitement          | Changement flux (add redaction stage?) |
+| `policies/`                        | **Configuration** : YAML déclaratif (append-only) | Nouvelle loi (masquer SS#?)            |
 
 **Résumé** :
+
 - ✅ Interface abstraite (base.py) = contrat
 - ✅ Implémentations concrètes (detectors/) = pluggables
 - ✅ Orchestration (pipelines/) = non-hardcoded
@@ -312,6 +311,7 @@ echo "Structure AI Engine explored"
 > "NovaCRM a 3 modules isolés : **backend (FastAPI), frontend (Next.js), AI Engine (Python)**.
 >
 > **Structure logique** :
+>
 > - **Backend** : API REST orchestrant métier + DB + appels Engine
 > - **Frontend** : UI affichant données, interactions utilisateur
 > - **Engine** : Analyse compliance, détection risques (PII, secrets)
@@ -319,13 +319,9 @@ echo "Structure AI Engine explored"
 > **Pourquoi SoC et pas monolith?**
 >
 > 1. **Scaling indépendant** : Engine très CPU-intensive (ML, regex), doit scaler seul. Backend = réseau I/O. Frontend = rendu. Trois machines optimisées différemment.
->
 > 2. **Teams isolées** : Team Python (Engine) ne touch à JavaScript. Team JS (Frontend) ne touch au Python. Zéro couplage, déploiement indépendant.
->
 > 3. **Risk mitigation** : Bug Engine → juste Engine redéploie. Backend/Frontend stable. Monolith = bug partout, restart 1h.
->
 > 4. **Réutilisabilité** : Engine = API universelle. Peut servir d'autres produits (pas juste NovaCRM). Backend = orchestration uniquement.
->
 > 5. **Technology choice** : Python pour Engine (stats, ML librairies). TypeScript pour Frontend (réactivité, types). FastAPI pour Backend (async, performance). Freedom choix tech.
 >
 > **Contraste monolith** : Tout en Python Django. Ajouter feature → 2h test suite, 15min deploy. Feature bug → restart 1h. Engine bottleneck = tout ralentit."
@@ -341,25 +337,30 @@ echo "Structure AI Engine explored"
 > "Backend communique avec Engine via **adapter pattern**. Communication = API (HTTP ou message queue).
 >
 > **Flux concret** :
+>
 > 1. Frontend envoie `POST /api/v1/contacts` avec données contact
 > 2. Backend (infrastructure/http/routes/contacts.py) reçoit requête
 > 3. Backend valide input + créé Entity Contact (core/domain/contact.py)
-> 4. Backend appelle compliance_service (core/services/compliance_service.py)
-> 5. compliance_service appelle **engine_adapter** (infrastructure/adapters/engine_adapter.py)
+> 4. Backend appelle use case de compliance (core/use_cases/check_compliance.py)
+> 5. Le use case peut appeler l'AI Engine via HTTP (communication directe ou via client HTTP)
 > 6. engine_adapter envoie `POST http://engine:8000/analyze` avec contact data
 > 7. Engine répond : `{ pii_detected: [email, phone], masked_data: {...}, audit_id: 123 }`
 > 8. Backend masque données, stocke DB + audit trail
 > 9. Backend répond 200 OK à Frontend
 >
 > **Avantages adapter pattern** :
+>
 > - **Isolation** : Engine implementation details isolated (could be HTTP, gRPC, message queue later)
 > - **Testability** : Backend can mock engine_adapter in tests (no real Engine needed)
 > - **Resilience** : Engine timeout? Adapter can retry/fallback
 >
 > **Code sketch** :
-> ```python
-> # infrastructure/adapters/engine_adapter.py
-> class EngineAdapter:
+>
+> ````python
+> # core/use_cases/check_compliance.py
+> # Note: Dans l'architecture actuelle, l'appel à l'AI Engine se fait directement
+> # via HTTP client, sans adapter pattern pour l'instant
+> class CheckCompliance:
 >     def analyze(self, data: dict) -> ComplianceResult:
 >         response = requests.post(
 >             f'{ENGINE_URL}/analyze',
@@ -368,6 +369,7 @@ echo "Structure AI Engine explored"
 >         )
 >         return ComplianceResult.from_dict(response.json())
 > ```"
+> ````
 
 **Score** : ✅ Montrez compréhension flow + adapter pattern + isolation.
 
@@ -386,37 +388,40 @@ echo "Structure AI Engine explored"
 > **Exemple concret** :
 >
 > **Avant** (mauvais, tight coupling) :
+>
 > ```typescript
 > // components/contact-form.tsx (COUPLÉ à backend)
 > const handleSubmit = async (data) => {
->   const res = await fetch('http://localhost:8000/contacts', {
->     method: 'POST',
->     body: JSON.stringify(data)
+>   const res = await fetch("http://localhost:8000/contacts", {
+>     method: "POST",
+>     body: JSON.stringify(data),
 >   });
-> }
+> };
 > // Si endpoint change → modifier ici + 10 autres fichiers
 > ```
 >
 > **Après** (bon, loose coupling) :
+>
 > ```typescript
 > // lib/api.ts (API CLIENT ISOLÉ)
 > export const createContact = async (data: Contact) => {
->   return fetch('/api/v1/contacts', {
->     method: 'POST',
+>   return fetch("/api/v1/contacts", {
+>     method: "POST",
 >     body: JSON.stringify(data),
->     headers: { 'Authorization': `Bearer ${token}` }
+>     headers: { Authorization: `Bearer ${token}` },
 >   });
-> }
+> };
 >
 > // components/contact-form.tsx (DÉCOUPLÉ de backend)
-> import { createContact } from '@/lib/api';
+> import { createContact } from "@/lib/api";
 > const handleSubmit = async (data) => {
 >   const result = await createContact(data);
-> }
+> };
 > // Si endpoint change → change dans lib/api.ts seul. Composant untouched.
 > ```
 >
 > **Avantages** :
+>
 > - ✅ **Centralized** : Auth headers, error handling, retries = un seul endroit
 > - ✅ **Testable** : Mock api.ts en tests (no real backend needed)
 > - ✅ **Type safety** : TypeScript types alignées avec backend DTOs"
@@ -498,6 +503,7 @@ echo "Structure AI Engine explored"
 > ```
 >
 > **Avantages** :
+>
 > - ✅ **Pluggable** : Ajouter nouveau détecteur? Étendre `Detector` + ajouter à pipeline
 > - ✅ **Testable** : Chaque détecteur testé en isolation
 > - ✅ **Reusable** : Détecteur peut être utilisé ailleurs (pas couplé à NovaCRM)
@@ -513,7 +519,7 @@ echo "Structure AI Engine explored"
 
 - [ ] Vous expliquez **SoC en 1 phrase** : "Chaque module, une responsabilité, une raison de changer"
 - [ ] Vous connaissez les **3 modules** et leur responsabilité (backend=orchestration, frontend=UI, engine=compliance)
-- [ ] Vous comprenez le **folder structure backend** (core/domain, core/services, infrastructure/http, infrastructure/db, adapters)
+- [ ] Vous comprenez le **folder structure backend** (core/domain, core/use_cases, infrastructure/http, infrastructure/database, infrastructure/audit)
 - [ ] Vous comprenez le **folder structure frontend** (app, components, lib, lib/api, lib/store, lib/types)
 - [ ] Vous comprenez le **folder structure engine** (detectors, pipelines, policies)
 - [ ] Vous pouvez **dessiner la communication** : Frontend → Backend API → Engine → Audit trail
@@ -524,15 +530,15 @@ echo "Structure AI Engine explored"
 
 **Validation pratique** :
 
-```powershell
+```bash
 # Terminal : vérifiez la structure
-cd /mnt/c/Perso/nova-crm/backend
-test -d core/domain && test -d infrastructure/http && test -d infrastructure/db && echo "✅ Backend structure OK"
+cd /home/renep/dev/nova-crm/backend
+test -d core/domain && test -d core/use_cases && test -d infrastructure/http && test -d infrastructure/database && echo "✅ Backend structure OK"
 
-cd /mnt/c/Perso/nova-crm/frontend
+cd /home/renep/dev/nova-crm/frontend
 test -d app && test -d components && test -f lib/api.ts && echo "✅ Frontend structure OK"
 
-cd /mnt/c/Perso/nova-crm/ai
+cd /home/renep/dev/nova-crm/ai
 test -d detectors && test -d pipelines && test -d policies && echo "✅ Engine structure OK"
 
 echo "✅ SECTION B validée"
@@ -590,7 +596,7 @@ echo "✅ SECTION B validée"
 class ContactService:
     def __init__(self, repository: ContactRepository):  # ← PORT (interface)
         self.repository = repository
-    
+
     def create_contact(self, data: dict):
         contact = Contact(**data)
         self.repository.save(contact)  # ← Pas d'SQL, abstrait!
@@ -624,9 +630,9 @@ service = ContactService(repository=repository)
 
 #### **LAB 2.4 : Identifiez ports & adapters dans le codebase**
 
-```powershell
+```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 
 # Trouvez les ports (interfaces)
 echo "=== PORTS (Interfaces) ==="
@@ -645,6 +651,7 @@ grep -r "repository = " backend/infrastructure/http/main.py | head -5
 ```
 
 **Résultat attendu** : Vous comprenez
+
 - ✅ Interfaces (ports) dans core/
 - ✅ Implémentations (adapters) dans infrastructure/
 - ✅ Injection dans http/main.py (point de décision tech)
@@ -657,11 +664,11 @@ grep -r "repository = " backend/infrastructure/http/main.py | head -5
 
 **3 patterns critiques dans NovaCRM** :
 
-| Pattern | Rôle | Exemple |
-|---------|------|---------|
+| Pattern      | Rôle                         | Exemple                                 |
+| ------------ | ---------------------------- | --------------------------------------- |
 | **Strategy** | Comportement interchangeable | Detector (PiiDetector, SecretsDetector) |
-| **Factory** | Créer objets polymorphes | RuleFactory crée rules selon policy |
-| **Adapter** | Adapter deux interfaces | EngineAdapter (backend ↔ engine) |
+| **Factory**  | Créer objets polymorphes     | RuleFactory crée rules selon policy     |
+| **Adapter**  | Adapter deux interfaces      | EngineAdapter (backend ↔ engine)        |
 
 #### **Pattern 1 : Strategy (Détecteurs pluggables)**
 
@@ -689,7 +696,7 @@ class SecretsDetector(Detector):
 class CompliancePipeline:
     def __init__(self, detectors: List[Detector]):
         self.detectors = detectors  # ← Agnostic, ne sait pas quel detector
-    
+
     def analyze(self, text: str):
         results = []
         for detector in self.detectors:  # ← Run each strategy
@@ -764,13 +771,13 @@ class EngineAdapter:
             'input': backend_data['text'],
             'context': {'source': 'backend', 'actor': backend_data.get('actor')}
         }
-        
+
         # Call engine
         response = requests.post(
             f'{ENGINE_URL}/analyze',
             json=engine_input
         )
-        
+
         # Convert engine response back to backend format
         return {
             'contact_id': backend_data['contact_id'],
@@ -800,15 +807,16 @@ result = adapter.analyze(backend_data)
 > ```python
 > class Detector(ABC):
 >     def detect(self, text: str) -> Result: pass
-> 
+>
 > class PiiDetector(Detector):
 >     def detect(self, text): return pii_findings
-> 
+>
 > class SecretsDetector(Detector):
 >     def detect(self, text): return secret_findings
 > ```
 >
 > **Avantage** :
+>
 > - ✅ **Pluggable** : Ajouter DetectorX? Extend Detector + ajouter à pipeline. Zéro changement pipeline.
 > - ✅ **Testable** : Mock Detector en tests (no real detection needed)
 > - ✅ **Reusable** : Détecteur peut servir autre système (pas couplé NovaCRM)
@@ -842,6 +850,7 @@ result = adapter.analyze(backend_data)
 > ```
 >
 > **Usage** :
+>
 > ```python
 > policy = load_yaml('policy.yaml')  # policy.rules = ['no_pii', 'no_secrets']
 > detectors = [DetectorFactory.create(rule) for rule in policy.rules]
@@ -849,6 +858,7 @@ result = adapter.analyze(backend_data)
 > ```
 >
 > **Avantage** :
+>
 > - ✅ **Data-driven** : Policy YAML définit rules. Factory crée automatiquement.
 > - ✅ **Extensible** : Nouvelle règle? Ajouter à REGISTRY. Pas de code change ailleurs.
 > - ✅ **Maintainable** : Créations en un endroit. Vs scattered if/else.
@@ -885,6 +895,7 @@ result = adapter.analyze(backend_data)
 **Fin de SECTION B**
 
 ✅ **Vous savez maintenant** :
+
 - Pourquoi 3 modules (SoC)
 - Comment chaque module est structuré (folder layout)
 - Comment modules communiquent (adapters, APIs)

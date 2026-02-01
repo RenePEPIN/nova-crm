@@ -4,7 +4,8 @@
 **Prérequis** : Windows avec WSL2 configuré, Visual Studio Code  
 **Objectif** : Préparer environnement local pour développement NovaCRM
 
-**Résultat final** : 
+**Résultat final** :
+
 - ✅ Virtualenv Python activé
 - ✅ Dependencies FastAPI/SQLAlchemy/Pytest installées
 - ✅ Git repository cloné (si première fois)
@@ -17,7 +18,7 @@
 
 ### 1.1 Vérifier WSL2 installé
 
-```powershell
+```bash
 # Terminal PowerShell (Windows)
 wsl --list --verbose
 
@@ -58,17 +59,17 @@ echo "✅ Git repository ready"
 
 ## Étape 2 : Setup Backend Python
 
-### 2.1 Vérifier Python 3.10+
+### 2.1 Vérifier Python 3.12+
 
 ```bash
 # Terminal WSL2
 python --version
 
 # Doit afficher:
-# Python 3.10.x ou supérieur
+# Python 3.12.x ou supérieur
 
 # Si absent, installer:
-# sudo apt update && sudo apt install python3.10 python3.10-venv python3-pip
+# sudo apt update && sudo apt install python3.12 python3.12-venv python3-pip
 
 python -m pip --version
 # Doit voir pip 20.0+
@@ -78,7 +79,7 @@ python -m pip --version
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Créer virtualenv
 python -m venv .venv
@@ -91,7 +92,7 @@ source .venv/bin/activate
 
 # Vérifier activation
 which python
-# Doit montrer: /mnt/c/Perso/nova-crm/backend/.venv/bin/python
+# Doit montrer: /home/renep/dev/nova-crm/backend/.venv/bin/python
 
 echo "✅ Virtualenv created and activated"
 ```
@@ -100,7 +101,7 @@ echo "✅ Virtualenv created and activated"
 
 ```bash
 # Terminal (virtualenv activé)
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Upgrade pip
 pip install --upgrade pip setuptools wheel
@@ -123,7 +124,7 @@ echo "✅ Backend dependencies installed"
 
 ```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Créer fichier .env
 cat > .env << 'EOF'
@@ -162,7 +163,7 @@ echo "✅ .env file created"
 
 ```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Créer dossiers (s'il n'existent pas)
 mkdir -p core/domain
@@ -213,7 +214,7 @@ npm --version
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/frontend
+cd /home/renep/dev/nova-crm/frontend
 
 # Installer dependencies
 npm install
@@ -240,7 +241,7 @@ echo "✅ Frontend dependencies installed"
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/ai
+cd /home/renep/dev/nova-crm/ai
 
 # Créer virtualenv
 python -m venv .venv
@@ -284,7 +285,7 @@ echo "✅ Taskfile installed"
 
 ```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 
 # Vérifier si Taskfile.yml existe
 test -f Taskfile.yml && echo "Taskfile.yml exists" || echo "Creating Taskfile.yml"
@@ -352,7 +353,7 @@ echo "✅ Taskfile.yml created"
 
 ```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 
 # Créer hooks directory
 mkdir -p .git/hooks
@@ -392,7 +393,7 @@ echo "✅ Git hooks installed"
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm
+cd /home/renep/dev/nova-crm
 
 # ✅ Backend ready?
 test -d backend/.venv && echo "✅ Backend virtualenv exists"
@@ -425,7 +426,7 @@ echo "🎉 SETUP COMPLETE"
 
 ```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 source .venv/bin/activate
 
 # Test FastAPI import
@@ -443,7 +444,7 @@ echo "✅ Python imports OK"
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/frontend
+cd /home/renep/dev/nova-crm/frontend
 
 # Test Next.js
 npm list next
@@ -478,18 +479,23 @@ echo "✅ Prêt pour LAB 2 : Créer /health endpoint"
 ## ❓ FAQ & Troubleshooting
 
 ### Q : Virtualenv pas trouvé après redémarrage terminal?
+
 **A** : Réactivez-le : `source backend/.venv/bin/activate`
 
 ### Q : pip install échoue (permission denied)?
+
 **A** : Utilisez `pip install --user` ou créez/activez virtualenv correctement
 
 ### Q : Node.js not found?
+
 **A** : Installer dans WSL2 : `curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt install nodejs`
 
 ### Q : Can't activate virtualenv en PowerShell Windows?
+
 **A** : Utilisez `.venv\Scripts\Activate.ps1` au lieu de bash
 
 ### Q : Database file location?
+
 **A** : SQLite par défaut créé dans `backend/nova_crm.db`. OK pour dev, mais PostgreSQL recommandé pour prod.
 
 ---

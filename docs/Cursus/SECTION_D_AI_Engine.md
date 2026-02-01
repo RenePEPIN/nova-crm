@@ -167,7 +167,7 @@ LLM never sees real PII
 
 ```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/ai
+cd /home/renep/dev/nova-crm/ai
 
 # Listez la structure
 tree -L 3 -I '__pycache__|*.pyc'

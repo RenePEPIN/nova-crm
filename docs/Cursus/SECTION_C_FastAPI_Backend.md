@@ -14,11 +14,11 @@
 
 **Comparaison frameworks** :
 
-| Framework | Type | Philosophie | Use case |
-|-----------|------|-------------|----------|
-| **Django** | Full-stack | "Batteries included" | Apps monolith (admin panel, ORM, forms, everything) |
-| **Flask** | Micro | "Minimalist" | Simple REST APIs (petits projets) |
-| **FastAPI** | Moderne | "Speed + types + async" | Production APIs (performance, scalability, dev experience) |
+| Framework   | Type       | Philosophie             | Use case                                                   |
+| ----------- | ---------- | ----------------------- | ---------------------------------------------------------- |
+| **Django**  | Full-stack | "Batteries included"    | Apps monolith (admin panel, ORM, forms, everything)        |
+| **Flask**   | Micro      | "Minimalist"            | Simple REST APIs (petits projets)                          |
+| **FastAPI** | Moderne    | "Speed + types + async" | Production APIs (performance, scalability, dev experience) |
 
 **Analogie concrète** : Restaurants
 
@@ -43,6 +43,7 @@
 **FastAPI avantages** :
 
 1. **Type hints** : Validation automatique (Pydantic)
+
    ```python
    @app.post("/contacts")
    def create_contact(contact: ContactDTO) -> ContactResponse:
@@ -51,6 +52,7 @@
    ```
 
 2. **Async/await** : Concurrency native (10x+ performance vs Django)
+
    ```python
    @app.get("/contacts/{id}")
    async def get_contact(id: int):
@@ -58,11 +60,13 @@
    ```
 
 3. **Auto docs** : Swagger UI generated from code (Pydantic + type hints)
+
    ```
    http://localhost:8000/docs → Interactive API docs
    ```
 
 4. **Validation** : Pydantic validates input automatically
+
    ```python
    # If POST /contacts with missing email → 422 validation error (automatic!)
    ```
@@ -131,9 +135,9 @@ WITH FASTAPI (async):
 
 **Objectif** : Démarrer FastAPI et avoir premier endpoint.
 
-```powershell
+```bash
 # Terminal WSL2
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Vérifier Python >= 3.10
 python --version
@@ -168,19 +172,20 @@ echo "✅ FastAPI setup complete"
 
 **Étape 1 : Structure du projet**
 
-```powershell
+```bash
 # Terminal
-cd /mnt/c/Perso/nova-crm/backend
+cd /home/renep/dev/nova-crm/backend
 
 # Listez structure actuelle
 ls -la
-# Vous verrez : core/, infrastructure/, venv/, etc
+# Vous verrez : core/, infrastructure/, .venv/, etc
 
-# Créez dossier s'il n'existe pas
+# Créez dossiers s'il n'existe pas
 mkdir -p infrastructure/http/routes
-mkdir -p infrastructure/db
+mkdir -p infrastructure/database
+mkdir -p infrastructure/audit
 mkdir -p core/domain
-mkdir -p core/services
+mkdir -p core/use_cases
 mkdir -p shared
 
 echo "✅ Folders created"
@@ -247,7 +252,7 @@ router = APIRouter(tags=["health"])
 async def health_check() -> Dict[str, Any]:
     """
     Health check endpoint.
-    
+
     Returns:
         status: "ok" if healthy
         timestamp: server time
@@ -264,7 +269,7 @@ async def health_check() -> Dict[str, Any]:
 async def health_detailed() -> Dict[str, Any]:
     """
     Detailed health check (DB, Engine, etc).
-    
+
     Returns:
         backend: ok
         database: ok/error
@@ -278,7 +283,7 @@ async def health_detailed() -> Dict[str, Any]:
     }
 ```
 
-**Étape 4 : Créer routes/__init__.py (make it package)**
+**Étape 4 : Créer routes/**init**.py (make it package)**
 
 ```python
 # backend/infrastructure/http/routes/__init__.py
@@ -299,7 +304,7 @@ router = APIRouter(prefix="/api/v1/contacts", tags=["contacts"])
 async def list_contacts() -> List[Dict[str, Any]]:
     """
     List all contacts.
-    
+
     TODO: Implement real CRUD
     """
     return [
@@ -314,14 +319,14 @@ async def get_contact(contact_id: int) -> Dict[str, Any]:
     """
     if contact_id < 1:
         raise HTTPException(status_code=400, detail="Invalid contact ID")
-    
+
     return {"id": contact_id, "name": "Sophie Martin", "email": "sophie@example.com"}
 
 @router.post("/")
 async def create_contact(data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Create new contact.
-    
+
     TODO: Validate with Pydantic DTO
     """
     return {"id": 3, "name": data.get("name"), "email": data.get("email")}
@@ -329,7 +334,7 @@ async def create_contact(data: Dict[str, Any]) -> Dict[str, Any]:
 
 **Étape 6 : Démarrer le serveur**
 
-```powershell
+```bash
 # Terminal (dans virtualenv)
 cd backend
 
@@ -343,7 +348,7 @@ uvicorn infrastructure.http.main:app --reload --host 0.0.0.0 --port 8000
 
 **Étape 7 : Tester l'endpoint**
 
-```powershell
+```bash
 # Terminal (nouvelle window)
 
 # Test /health endpoint
@@ -373,7 +378,8 @@ curl http://localhost:8000/api/v1/contacts
 # Vous verrez interactive API documentation auto-générée!
 ```
 
-**Résultat attendu** : 
+**Résultat attendu** :
+
 - ✅ FastAPI server running
 - ✅ /health endpoint returns 200 OK
 - ✅ Swagger docs at /docs
@@ -390,6 +396,7 @@ curl http://localhost:8000/api/v1/contacts
 > "FastAPI vs Django — c'est un choix architectural documenté en ADR-02.
 >
 > **Django** :
+>
 > - ✅ Full-stack (ORM, admin, auth built-in)
 > - ✅ Mature (15+ years)
 > - ❌ Synchrone par défaut (blocking I/O)
@@ -397,6 +404,7 @@ curl http://localhost:8000/api/v1/contacts
 > - ❌ Performance limitée (1 thread per request)
 >
 > **FastAPI** :
+>
 > - ✅ Async native (async/await)
 > - ✅ Performance (10x+ vs Django on I/O-heavy apps)
 > - ✅ Type hints (automatic validation, documentation)
@@ -406,6 +414,7 @@ curl http://localhost:8000/api/v1/contacts
 > - ❌ Requires async mindset
 >
 > **Décision NovaCRM** :
+>
 > 1. **Compliance checks async** : Calling Engine IA can be slow (PII detection, scoring). Async = don't block dashboard
 > 2. **Type safety** : PII masking bugs = GDPR fines. Type hints + Pydantic = compile-time safety
 > 3. **Auto docs** : Frontend + Backend aligned on API contract (Swagger auto-generated)
@@ -428,13 +437,14 @@ curl http://localhost:8000/api/v1/contacts
 > Restaurant avec async = 1 serveur qui prend commande (client 1), tandis que cuisine travaille, il prend commande (client 2), etc. Pendant ce temps, cuisine prépare (parallelism sans threads).
 >
 > **Code** :
+>
 > ```python
 > # Sync (BLOCKING) - Django
 > @app.get('/contacts')
 > def list_contacts():
 >     contacts = db.query(Contact).all()  # ← BLOCKS 100ms
 >     return contacts
-> 
+>
 > # Si 10 requêtes concurrent → each waits 100ms = 1 second total
 >
 > # Async (NON-BLOCKING) - FastAPI
@@ -442,30 +452,32 @@ curl http://localhost:8000/api/v1/contacts
 > async def list_contacts():
 >     contacts = await db.query(Contact).all()  # ← YIELDS, other requests run
 >     return contacts
-> 
+>
 > # Si 10 requêtes concurrent → all run in parallel, 100ms total
 > ```
 >
 > **Bénéfice NovaCRM** :
+>
 > ```python
 > @app.post('/contacts')
 > async def create_contact(contact: ContactDTO):
 >     # Step 1: Validate & save DB (async)
 >     db_contact = await db.save(contact)
->     
+>
 >     # Step 2: Call Engine for compliance check (async, parallel to other requests)
 >     compliance = await engine_adapter.analyze(contact.text)
->     
+>
 >     # Step 3: Log audit trail (async)
 >     await audit_logger.log(action='create_contact', contact_id=db_contact.id)
->     
+>
 >     return db_contact
-> 
+>
 > # WHILE this request waiting for Engine (step 2), other requests can run!
 > # Instead of blocking for 200ms, we yield and let others run.
 > ```
 >
 > **Performance** :
+>
 > - Sync : 1000 requests × 200ms per request = 200 seconds latency for last user
 > - Async : 1000 requests × 200ms per request = 200ms latency (all parallel)"
 
@@ -482,6 +494,7 @@ curl http://localhost:8000/api/v1/contacts
 > **Concept** : Vous déclarez structure de donnée avec types. Pydantic valide automatiquement.
 >
 > **Code** :
+>
 > ```python
 > from pydantic import BaseModel, EmailStr, Field
 > from typing import Optional
@@ -505,6 +518,7 @@ curl http://localhost:8000/api/v1/contacts
 > ```
 >
 > **Avantages** :
+>
 > - ✅ **Automatic validation** : No if/else checks
 > - ✅ **Type safety** : Errors caught at runtime (better than runtime bugs)
 > - ✅ **Auto docs** : DTO structure in Swagger
@@ -512,6 +526,7 @@ curl http://localhost:8000/api/v1/contacts
 > - ✅ **Compliance** : Email validation = reduces spam/typos (data quality)
 >
 > **Pourquoi important pour NovaCRM** :
+>
 > - Contact email invalid = PII detection might fail
 > - Type safety = fewer bugs in compliance checks
 > - Auto validation = frontend + backend aligned (both use same DTO)"
@@ -527,7 +542,9 @@ curl http://localhost:8000/api/v1/contacts
 > "**FastAPI auto-génère Swagger UI** à partir du code (type hints + docstrings).
 >
 > **Processus** :
+>
 > 1. Vous déclarez route avec types et docstring
+>
 > ```python
 > from typing import List
 > from pydantic import BaseModel
@@ -541,11 +558,11 @@ curl http://localhost:8000/api/v1/contacts
 > async def list_contacts(skip: int = 0, limit: int = 10):
 >     '''
 >     List all contacts.
->     
+>
 >     Query Parameters:
 >     - skip: Skip first N contacts (pagination)
 >     - limit: Return max N contacts
->     
+>
 >     Returns:
 >         List of contacts
 >     '''
@@ -556,11 +573,13 @@ curl http://localhost:8000/api/v1/contacts
 > 3. Swagger UI reads OpenAPI schema → interactive docs
 >
 > **Result** :
+>
 > - GET http://localhost:8000/docs → Interactive API explorer
 > - Try endpoints, see responses, auto-generates curl commands
 > - No manual documentation needed! Code = docs
 >
 > **Avantage NovaCRM** :
+>
 > - Frontend dev opens /docs → sees all endpoints, response formats, error codes
 > - No manual sync (Frontend doesn't ask 'what does /api/v1/contacts return?')
 > - Type safety = contract enforced"
@@ -585,7 +604,7 @@ curl http://localhost:8000/api/v1/contacts
 
 **Validation pratique** :
 
-```powershell
+```bash
 # Vérifiez que le serveur tourne
 curl http://localhost:8000/health
 
@@ -633,7 +652,7 @@ class ContactCreateDTO(BaseModel):
     email: EmailStr
     phone: Optional[str] = Field(None, regex=r'^\+?[\d\s\-()]{10,}')
     company: Optional[str] = None
-    
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -652,7 +671,7 @@ class ContactResponseDTO(BaseModel):
     phone: Optional[str] = None
     company: Optional[str] = None
     created_at: datetime
-    
+
     class Config:
         from_attributes = True  # Map SQLAlchemy model → DTO
 
@@ -697,7 +716,7 @@ class ContactCreateDTO(BaseModel):
     phone: Optional[str] = Field(None, regex=r'^\+?[\d\s\-()]{10,}')
     company: Optional[str] = None
     notes: Optional[str] = None
-    
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -724,7 +743,7 @@ class ContactResponseDTO(BaseModel):
     company: Optional[str] = None
     notes: Optional[str] = None
     created_at: datetime
-    
+
     class Config:
         from_attributes = True
 
@@ -738,20 +757,20 @@ async def create_contact(
 ) -> ContactResponseDTO:
     """
     Create new contact.
-    
+
     Flow:
     1. Pydantic validates ContactCreateDTO
     2. Backend calls engine to check PII
     3. Engine masks PII in contact data
     4. Backend stores masked contact in DB
     5. Backend returns ContactResponseDTO (masked)
-    
+
     Args:
         contact: Contact data (validated by Pydantic)
-    
+
     Returns:
         ContactResponseDTO: Created contact (with masked PII)
-    
+
     Raises:
         422: Validation error (invalid email, etc)
         400: Business error (email already exists)
@@ -759,7 +778,7 @@ async def create_contact(
     # Step 1: Validate via DTO (automatic by FastAPI)
     # contact.name : str (min_length 1, max_length 100)
     # contact.email : EmailStr (valid email)
-    
+
     # Step 2: Convert DTO → Domain Entity
     contact_entity = Contact(
         name=contact.name,
@@ -768,21 +787,21 @@ async def create_contact(
         company=contact.company,
         notes=contact.notes
     )
-    
+
     # Step 3: Call compliance engine
     compliance_result = await engine_adapter.analyze(
         text=f"{contact.email} {contact.phone} {contact.notes}"
     )
     # Returns: { pii_found: [...], masked_data: {...}, audit_id: '123' }
-    
+
     # Step 4: Mask PII in entity
     if compliance_result.pii_found:
         contact_entity.email = compliance_result.masked_data['email']
         contact_entity.phone = compliance_result.masked_data['phone']
-    
+
     # Step 5: Save to DB
     saved_contact = await db.save(contact_entity)
-    
+
     # Step 6: Log audit trail
     await audit_logger.log(
         action='contact_created',
@@ -790,7 +809,7 @@ async def create_contact(
         pii_found=compliance_result.pii_found,
         audit_id=compliance_result.audit_id
     )
-    
+
     # Step 7: Return as DTO (Pydantic serializes)
     return ContactResponseDTO.from_orm(saved_contact)
 ```
@@ -811,7 +830,7 @@ async def create_contact(
 
 **Test pratique** :
 
-```powershell
+```bash
 # Test valide
 curl -X POST http://localhost:8000/api/v1/contacts \
   -H "Content-Type: application/json" \
@@ -863,14 +882,14 @@ Error handler catches → converts to HTTP 404 response
 async def logging_middleware(request: Request, call_next):
     """Log every request + response."""
     start_time = time.time()
-    
+
     # Call next middleware/endpoint
     response = await call_next(request)
-    
+
     # Log after response
     duration = time.time() - start_time
     print(f"{request.method} {request.url.path} → {response.status_code} ({duration:.2f}s)")
-    
+
     return response
 
 @app.exception_handler(ValueError)
@@ -892,18 +911,18 @@ async def value_error_handler(request: Request, exc: ValueError):
 
 > "JWT (JSON Web Token) = stateless authentication. Token contains user info + signature.
 >
-> ```python
+> ````python
 > # Via middleware (run for all requests)
 > @app.middleware('http')
 > async def auth_middleware(request: Request, call_next):
 >     token = request.headers.get('Authorization', '')
->     
+>
 >     if not token.startswith('Bearer '):
 >         return JSONResponse(
 >             status_code=401,
 >             content={'error': 'Missing or invalid token'}
 >         )
->     
+>
 >     try:
 >         token_str = token.split(' ')[1]
 >         payload = jwt.decode(token_str, SECRET_KEY)
@@ -913,16 +932,17 @@ async def value_error_handler(request: Request, exc: ValueError):
 >             status_code=401,
 >             content={'error': 'Invalid token'}
 >         )
->     
+>
 >     response = await call_next(request)
 >     return response
-> 
+>
 > # Usage in endpoint
 > @app.get('/protected')
 > async def protected(request: Request):
 >     user = request.state.user
 >     return {'message': f'Hello {user[\"name\"]}'}
 > ```"
+> ````
 
 ---
 
@@ -944,6 +964,7 @@ async def value_error_handler(request: Request, exc: ValueError):
 **Fin de SECTION C**
 
 ✅ **Vous savez maintenant** :
+
 - FastAPI fondamentals (async, Pydantic, auto-docs)
 - Créer endpoints avec DTOs
 - Valider input automatiquement

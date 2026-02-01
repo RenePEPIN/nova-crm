@@ -40,7 +40,7 @@ NovaCRM est organisé en **quatre grands blocs** :
 │  - Gestion des policies IA                                              │
 │  - Orchestration appels vers AI Compliance Engine                       │
 └───────────────────────────────┬──────────────────────────────────────────┘
-                                │ HTTP interne / Message Bus (futur)     
+                                │ HTTP interne / Message Bus (futur)
                                 ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                     AI COMPLIANCE ENGINE (Python)                        │
@@ -122,13 +122,14 @@ NovaCRM est organisé en **quatre grands blocs** :
 ```text
 /backend
 ├── core/                     # Domain & use cases
-│   ├── domain/               # Entités métier (CRM, IA)
-│   └── services/             # Services applicatifs
+│   ├── domain/               # Entités métier (Contact, Health, etc.)
+│   └── use_cases/            # Use cases applicatifs
 ├── infrastructure/
-│   ├── http/                 # Routers FastAPI, DTO
-│   ├── db/                   # Modèles SQLAlchemy, sessions
-│   └── integrations/         # Adapters externes (AI, mail, etc.)
-└── api/main.py               # Entrée FastAPI
+│   ├── http/                 # Routes FastAPI, DTO
+│   ├── database/             # Modèles DB, sessions (futur)
+│   └── audit/                # Audit trail (futur)
+├── shared/                   # Code partagé (utils, exceptions)
+└── manage.py                 # Point d'entrée
 ```
 
 **Règles d’utilisation :**
